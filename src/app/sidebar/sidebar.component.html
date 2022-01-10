@@ -1,0 +1,51 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="/" class="brand-link">
+    <img
+      src="assets/images/favicon.png"
+      alt="AdminLTE Logo"
+      class="brand-image img-circle elevation-3"
+      style="opacity: 0.8"
+    />
+    <span class="brand-text">MEUMERC</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <nav class="mt-2">
+      <ul
+        class="nav nav-pills nav-sidebar flex-column"
+        data-widget="treeview"
+        role="menu"
+        data-accordion="false"
+      >
+        <li class="nav-item">
+          <a [routerLink]="['/']" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p> Dashboard</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="javascript: void(0)" class="nav-link">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              Configurações
+              <i class="fas fa-cog right"></i>
+              <!-- <span class="badge badge-info right">6</span> -->
+            </p>
+          </a>
+          <ul class="nav nav-treeview" style="display: none;">
+            <li class="nav-item">
+              <a [routerLink]="['logout']" class="nav-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <p>Sair</p>
+              </a>
+            </li>
+          </ul>
+        </li>        
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

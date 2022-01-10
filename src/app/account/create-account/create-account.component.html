@@ -1,0 +1,81 @@
+<div class="container-fluid">
+  <div class="row">
+    <div
+      class="main left col-md-5 col-sm-12 col-lg-4 border-left border-left-size-8 border-primary bg-light text-dark"
+    >
+      <div class="login">
+        <div class="login-components">
+          <div class="logo">
+            <img src="assets/images/logo-2.png" alt="" srcset="" />
+          </div>
+          <h1>Crie sua conta</h1>
+          <p>Jé tem cadastro? <a [routerLink]="['/login']">Faça o Login</a></p>
+          <div class="form mt-4">
+            <form #form="ngForm" (ngSubmit)="onSubmit()">
+              <div class="form-group" *ngIf="loginError">
+                <div class="alert alert-danger" [innerText]="showError"></div>
+              </div>
+              <div class="form-group">
+                <label for="form.nome">Nome Completo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="form.nome"
+                  name="nome"
+                  [(ngModel)]="user.nome"
+                  required
+                />
+                <small id="form.email" class="form-text text-muted"></small>
+              </div>
+              <div class="form-group">
+                <label for="form.email">E-mail</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="form.email"
+                  name="email"
+                  [(ngModel)]="user.email"
+                  required
+                />
+                <small id="form.email" class="form-text text-muted"></small>
+              </div>
+              <div class="form-group">
+                <label for="form.senha">Senha</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="form.senha"
+                  name="senha"
+                  [(ngModel)]="user.senha"
+                />
+              </div>
+              <div class="form-group">
+                <label for="form.confirme">Confirme sua senha</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="form.confirme"
+                  name="confirme"
+                  [(ngModel)]="user.confirme"
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg btn-block mt-3"
+              >
+                Criar minha conta
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="footer text-center">
+        <h3>
+          ©2001–2022 Todos os direitos reservados. Meu Merc® é registrado pela
+          Novakio Aceleradora.
+        </h3>
+      </div>
+    </div>
+    <div class="right col-md-7 col-lg-8 bg-primary text-white"></div>
+  </div>
+</div>
