@@ -8,14 +8,12 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { LayoutComponent } from './layout/layout.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
-import { ContactComponent } from './models/contact/contact.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './account/login/login.component';
 import { CreateAccountComponent } from './account/create-account/create-account.component';
 import { AuthenticationComponent } from './layout/authentication/authentication.component';
 import { FormsModule } from '@angular/forms';
 import { LogoutComponent } from './account/logout/logout.component';
-import { PerfilComponent } from './models/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -25,12 +23,10 @@ import { PerfilComponent } from './models/perfil/perfil.component';
     FooterComponent,
     HeaderComponent,
     LayoutComponent,
-    ContactComponent,
     LoginComponent,
     CreateAccountComponent,
     AuthenticationComponent,
-    LogoutComponent,
-    PerfilComponent 
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
