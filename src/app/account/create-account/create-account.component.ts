@@ -11,8 +11,7 @@ export class CreateAccountComponent implements OnInit {
   user = {
     nome: '',
     email: '',
-    senha: '',
-    confirme: '',
+    cnpj: ''
   };
 
   public showError = '';
@@ -40,7 +39,7 @@ export class CreateAccountComponent implements OnInit {
   }
 
   public validaDados(ob: any) {
-    if (ob.nome === '' || ob.email === '' || ob.senha === '') {
+    if (ob.nome === '' || ob.email === '' || ob.cnpj === '') {
       this.mensagemErro('Verifique os dados que estão faltando');
       return false;
     }
@@ -49,20 +48,16 @@ export class CreateAccountComponent implements OnInit {
 
   async onSubmit() {
     try {
-      if (this.user.senha !== this.user.confirme) {
-        this.mensagemErro('As senhas não são iguais!');
-      } else {
-        if (this.validaDados(this.user)) {
-          const result = await this.accountService.createAccount(this.user);
-          console.log(result);
-          if (result.status === 'error') {
-            this.mensagemErro(result.message);
-          } else {
-            window.localStorage.setItem('token', result.token);
-            this.clearObject(this.user);
-            this.mensagemErro('');
-            window.location.href = '/';
-          }
+      if (this.validaDados(this.user)) {
+        const result = await this.accountService.createAccount(this.user);
+        console.log(result);
+        if (result.status === 'error') {
+          this.mensagemErro(result.message);
+        } else {
+          window.localStorage.setItem('token', result.token);
+          this.clearObject(this.user);
+          this.mensagemErro('');
+          window.location.href = '/create-account/data';
         }
       }
     } catch (error) {

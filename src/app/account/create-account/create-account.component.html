@@ -40,30 +40,20 @@
                 <small id="form.email" class="form-text text-muted"></small>
               </div>
               <div class="form-group">
-                <label for="form.senha">Senha</label>
+                <label for="form.cnpj">CNPJ</label>
                 <input
-                  type="password"
+                  type="text"
                   class="form-control"
-                  id="form.senha"
-                  name="senha"
-                  [(ngModel)]="user.senha"
-                />
-              </div>
-              <div class="form-group">
-                <label for="form.confirme">Confirme sua senha</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="form.confirme"
-                  name="confirme"
-                  [(ngModel)]="user.confirme"
+                  id="form.cnpj"
+                  name="cnpj"
+                  [(ngModel)]="user.cnpj"
                 />
               </div>
               <button
                 type="submit"
                 class="btn btn-primary btn-lg btn-block mt-3"
               >
-                Criar minha conta
+                Continuar
               </button>
             </form>
           </div>
