@@ -15,6 +15,7 @@ import { CreateAccountComponent } from './account/create-account/create-account.
 import { AuthenticationComponent } from './layout/authentication/authentication.component';
 import { FormsModule } from '@angular/forms';
 import { LogoutComponent } from './account/logout/logout.component';
+import { PerfilComponent } from './models/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LogoutComponent } from './account/logout/logout.component';
     LoginComponent,
     CreateAccountComponent,
     AuthenticationComponent,
-    LogoutComponent 
+    LogoutComponent,
+    PerfilComponent 
   ],
   imports: [
     BrowserModule,

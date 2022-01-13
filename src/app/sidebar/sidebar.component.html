@@ -26,12 +26,18 @@
           </a>
         </li>
         <li class="nav-item">
+          <a [routerLink]="['perfil']" class="nav-link">
+            <i class="nav-icon far fa-user"></i>
+            <p>
+              Meu Perfil
+            </p>
+          </a>
+        </li>
+        <li class="nav-item menu-open">
           <a href="javascript: void(0)" class="nav-link">
             <i class="nav-icon fas fa-copy"></i>
             <p>
-              Configurações
-              <i class="fas fa-cog right"></i>
-              <!-- <span class="badge badge-info right">6</span> -->
+              Configurações <i class="fas fa-cog right"></i>
             </p>
           </a>
           <ul class="nav nav-treeview" style="display: none;">
