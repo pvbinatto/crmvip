@@ -6,9 +6,7 @@ body {
     color: #2a2257;
     text-decoration: underline;
   }
-  .btn-primary {
-    background-color: #2a2257;
-  }
+
   .main {
     min-height: 100vh;
     overflow-y: auto;

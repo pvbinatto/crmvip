@@ -14,6 +14,11 @@ import { CreateAccountComponent } from './account/create-account/create-account.
 import { AuthenticationComponent } from './layout/authentication/authentication.component';
 import { FormsModule } from '@angular/forms';
 import { LogoutComponent } from './account/logout/logout.component';
+import { TextMaskModule } from 'angular2-text-mask';
+import { PasswordComponent } from './account/password/password.component';
+import { RegistrationComponent } from './account/registration/registration.component';
+import { OwerComponent } from './account/registration/ower/ower.component';
+import { FinishComponent } from './account/registration/finish/finish.component';
 
 @NgModule({
   declarations: [
@@ -26,15 +31,23 @@ import { LogoutComponent } from './account/logout/logout.component';
     LoginComponent,
     CreateAccountComponent,
     AuthenticationComponent,
-    LogoutComponent
+    LogoutComponent,
+    PasswordComponent,
+    RegistrationComponent,
+    OwerComponent,
+    FinishComponent
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    TextMaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  
+}

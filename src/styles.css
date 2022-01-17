@@ -9,3 +9,7 @@
     white-space: nowrap;
     font-weight: 700!important;
 }
+
+.btn-primary {
+    background-color: #2a2257;
+  }

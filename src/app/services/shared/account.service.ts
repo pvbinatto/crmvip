@@ -19,8 +19,24 @@ export class AccountService {
     return false;
   }
 
-  async createAccount(account: any) {
-    const result = await this.http.post<any>(`${environment.api}/empresa`, account).toPromise();
+  async verifyAccount(account: any) {
+    account.cnpj = account.cnpj.replace(/\D/g,"");
+    const result = await this.http.get<any>(`${environment.api}/business/verificacadastro/${account.cnpj}`).toPromise();
+    return result;
+  }
+
+  async verificaToken(token: any){
+    const result = await this.http.get<any>(`${environment.api}/business/verificatoken/${token}`).toPromise();
+    return result;
+  }
+
+  async createAccount(business: any) {
+    const result = await this.http.post<any>(`${environment.api}/business/`, business).toPromise();
+    return result;
+  }
+
+  async enviaEmailAtivacao(business: any){
+    const result = await this.http.post<any>(`${environment.api}/business/emailativacao`, business).toPromise();
     return result;
   }
 }

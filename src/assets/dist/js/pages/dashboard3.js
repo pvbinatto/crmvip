@@ -3,9 +3,8 @@
 const api = "http://avenida.vip/api";
 
 var path = document.location.pathname.split("/");
-console.log(path);
 
-if (path.length == 2) {
+if (path.length == 1) {
   let totale = -1;
   let atual = 0;
 

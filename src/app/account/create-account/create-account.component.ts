@@ -1,6 +1,8 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/shared/account.service';
+import { PasswordComponent } from '../password/password.component';
 
 @Component({
   selector: 'app-create-account',
@@ -11,7 +13,22 @@ export class CreateAccountComponent implements OnInit {
   user = {
     nome: '',
     email: '',
-    cnpj: ''
+    cnpj: '',
+  };
+
+  business = {
+    company: '',
+    cpfcnpj: '',
+    email: '',
+    phone: '',
+    cellphone: '',
+    zipcode: '',
+    address: '',
+    number: '',
+    complement: '',
+    district: '',
+    city: '',
+    state: ''
   };
 
   public showError = '';
@@ -38,8 +55,29 @@ export class CreateAccountComponent implements OnInit {
     }
   }
 
+  public mask = [
+    /[1-9]/,
+    /\d/,
+    '.',
+    /\d/,
+    /\d/,
+    /\d/,
+    '.',
+    /\d/,
+    /\d/,
+    /\d/,
+    '/',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+  ];
+
   public validaDados(ob: any) {
-    if (ob.nome === '' || ob.email === '' || ob.cnpj === '') {
+    if (ob.cnpj === '') {
       this.mensagemErro('Verifique os dados que estão faltando');
       return false;
     }
@@ -49,15 +87,16 @@ export class CreateAccountComponent implements OnInit {
   async onSubmit() {
     try {
       if (this.validaDados(this.user)) {
-        const result = await this.accountService.createAccount(this.user);
-        console.log(result);
+        const result = await this.accountService.verifyAccount(this.user);
         if (result.status === 'error') {
           this.mensagemErro(result.message);
         } else {
-          window.localStorage.setItem('token', result.token);
+          var business = result;
+          const insertCad = await this.accountService.createAccount(business);
+          //window.localStorage.setItem('token', result.token);
           this.clearObject(this.user);
           this.mensagemErro('');
-          window.location.href = '/create-account/data';
+          this.router.navigate(['/password', {id: insertCad.token}]);
         }
       }
     } catch (error) {

@@ -10,42 +10,22 @@
           </div>
           <h1>Crie sua conta</h1>
           <p>Jé tem cadastro? <a [routerLink]="['/login']">Faça o Login</a></p>
+          <hr>
+          <p>Informe o seu CNPJ cadastrado na Vip Automação para iniciar o cadastro da sua empresa aqui no área do <b>#clienteVip</b></p>
           <div class="form mt-4">
             <form #form="ngForm" (ngSubmit)="onSubmit()">
               <div class="form-group" *ngIf="loginError">
                 <div class="alert alert-danger" [innerText]="showError"></div>
               </div>
               <div class="form-group">
-                <label for="form.nome">Nome Completo</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="form.nome"
-                  name="nome"
-                  [(ngModel)]="user.nome"
-                  required
-                />
-                <small id="form.email" class="form-text text-muted"></small>
-              </div>
-              <div class="form-group">
-                <label for="form.email">E-mail</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="form.email"
-                  name="email"
-                  [(ngModel)]="user.email"
-                  required
-                />
-                <small id="form.email" class="form-text text-muted"></small>
-              </div>
-              <div class="form-group">
                 <label for="form.cnpj">CNPJ</label>
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control text-center" autofocus
                   id="form.cnpj"
+                  autocomplete="off"
                   name="cnpj"
+                  [textMask]='{mask: mask}'
                   [(ngModel)]="user.cnpj"
                 />
               </div>
@@ -61,8 +41,7 @@
       </div>
       <div class="footer text-center">
         <h3>
-          ©2001–2022 Todos os direitos reservados. Meu Merc® é registrado pela
-          Novakio Aceleradora.
+          ©2001–2022 Todos os direitos reservados.
         </h3>
       </div>
     </div>

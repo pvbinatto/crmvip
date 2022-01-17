@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {}
-
+  
   async onSubmit() {
     try {
       const result = await this.accountService.login(this.user);

@@ -1,0 +1,124 @@
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-md-9">
+      <div class="logo p-3">
+        <img src="assets/images/logo-2.png" alt="" srcset="" />
+      </div>
+      <div class="steps p-3">
+        <ul>
+          <li>Início &raquo;</li>
+          <li>
+            <a
+              [routerLink]="['/account/registration/ower']"
+              onclick="return false"
+              href="javascript: void(0)"
+              [attr.class]="enableData"
+              >Responsável</a
+            >
+            &raquo;
+          </li>
+          <li>
+            <a
+              [routerLink]="['/account/registration/finish']"
+              onclick="return false"
+              href="javascript: void(0)"
+              [attr.class]="enableData"
+              >Finalização</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="formulario p-3">
+        <form (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <div
+                  [ngClass]="status ? '' : 'alert alert-danger'"
+                  [innerText]="showError"
+                ></div>
+              </div>
+              <div class="form-group">
+                <label for="form.company">Razão Social</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="form.company"
+                  autocomplete="off"
+                  name="razaosocial"
+                  disabled
+                  [(ngModel)]="business.company"
+                />
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="form.cpfcnpj">CNPJ</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="form.cpfcnpj"
+                      autocomplete="off"
+                      name="cpfcnpj"
+                      disabled
+                      [(ngModel)]="business.cpfcnpj"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="form.email">E-mail</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="form.email"
+                      autocomplete="off"
+                      name="email"
+                      [(ngModel)]="business.email"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="form.phone">Telefone</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="form.phone"
+                      autocomplete="off"
+                      name="phone"
+                      [(ngModel)]="business.phone"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="form.cellphone">Celular</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="form.cellphone"
+                      autocomplete="off"
+                      name="cellphone"
+                      [(ngModel)]="business.cellphone"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-lg btn-block mt-3"
+                  >
+                    Continuar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-3 password"></div>
+  </div>
+</div>

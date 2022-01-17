@@ -1,0 +1,13 @@
+.steps {
+    margin-top: 20px;
+}
+.steps ul {
+    padding-inline-start: 0px;
+}
+.steps ul li {
+    display: inline;
+    padding: 10px 5px
+}
+.steps ul li a {
+    text-decoration: none;
+}
