@@ -1,8 +1,8 @@
-import { ThrowStmt } from '@angular/compiler';
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AccountService } from 'src/app/services/shared/account.service';
-import { PasswordComponent } from '../password/password.component';
 
 @Component({
   selector: 'app-create-account',
@@ -34,7 +34,7 @@ export class CreateAccountComponent implements OnInit {
   public showError = '';
   public loginError = false;
 
-  constructor(private accountService: AccountService, private router: Router) {}
+  constructor(private accountService: AccountService, private router: Router, private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {}
 
@@ -86,10 +86,13 @@ export class CreateAccountComponent implements OnInit {
 
   async onSubmit() {
     try {
+      this.spinner.show();
+      console.log('foi')
       if (this.validaDados(this.user)) {
         const result = await this.accountService.verifyAccount(this.user);
         if (result.status === 'error') {
           this.mensagemErro(result.message);
+          this.spinner.hide();
         } else {
           var business = result;
           const insertCad = await this.accountService.createAccount(business);
@@ -97,9 +100,12 @@ export class CreateAccountComponent implements OnInit {
           this.clearObject(this.user);
           this.mensagemErro('');
           this.router.navigate(['/password', {id: insertCad.token}]);
+          this.spinner.hide();
         }
+        this.spinner.hide();
       }
     } catch (error) {
+      this.spinner.hide();
       console.error(error);
     }
   }

@@ -1,3 +1,11 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="large"
+  color="#fff"
+  template='<i class="fas fa-circle-notch fa-spin fa-3x"></i>'
+  style="color: rgba(255, 255, 255, 0.5)"
+  ><p style="color: white">Aguarde...</p>
+</ngx-spinner>
 <div class="container-fluid">
   <div class="row content">
     <div class="col-md-9">
@@ -83,9 +91,11 @@
                     <label for="form.phone">Telefone</label>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control telefone"
                       id="form.phone"
                       autocomplete="off"
+                      maxlength="15"
+                      mask="(00)00000-0000 || (00)0000-0000"
                       name="phone"
                       [(ngModel)]="business.phone"
                     />
@@ -100,7 +110,36 @@
                       id="form.cellphone"
                       autocomplete="off"
                       name="cellphone"
+                      mask="(00)00000-0000 || (00)0000-0000"
                       [(ngModel)]="business.cellphone"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="form.password">Senha</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="form.password"
+                      autocomplete="off"
+                      name="password"
+                      maxlength="12"
+                      [(ngModel)]="business.password"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="form.passwordConfirm">Confirme a senha</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="form.passwordConfirm"
+                      autocomplete="off"
+                      name="passwordConfirm"
+                      maxlength="12"
+                      [(ngModel)]="business.passwordConfirm"
                     />
                   </div>
                 </div>

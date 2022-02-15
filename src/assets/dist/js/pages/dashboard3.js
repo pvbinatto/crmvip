@@ -4,13 +4,13 @@ const api = "http://avenida.vip/api";
 
 var path = document.location.pathname.split("/");
 
-if (path.length == 1) {
-  let totale = -1;
-  let atual = 0;
+let totale = -1;
+let atual = 0;
 
-  $(function () {
-    "use strict";
+$(function () {
+  "use strict";
 
+  if (path.length == 1) {
     var ticksStyle = {
       fontColor: "#495057",
       fontStyle: "bold",
@@ -209,5 +209,14 @@ if (path.length == 1) {
     } else {
       $("#customSwitch3").removeAttr("checked");
     }
-  });
+  }
+});
+
+function mascara(t, mask) {
+  var i = t.value.length;
+  var saida = mask.substring(1, 0);
+  var texto = mask.substring(i);
+  if (texto.substring(0, 1) != saida) {
+    t.value += texto.substring(0, 1);
+  }
 }

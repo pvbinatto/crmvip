@@ -28,6 +28,7 @@
             ],
             "styles": [
               "src/assets/plugins/fontawesome-free/css/all.min.css",
+              "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
               "src/assets/dist/css/adminlte.min.css",
               "src/styles.css"
 

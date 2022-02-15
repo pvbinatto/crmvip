@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'appCrm';
+  title = 'CRMVIP :: Atendimento';
+  titleS = 'spinner';
+  spinnerType:any;
+  spinnerName: any;
+
+
+  constructor(private spinner: NgxSpinnerService) {}
+
+  ngOnInit() {
+
+  }
 }
