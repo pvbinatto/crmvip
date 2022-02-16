@@ -97,7 +97,7 @@
       </div>
       <div class="modal-body">
         <form (ngSubmit)="onReset()" #form="ngForm">
-          <div class="form-group" *ngIf="loginError">
+          <div class="form-group" *ngIf="resetError">
             <div class="alert alert-danger" [innerText]="showError"></div>
           </div>
           <div class="form-group">
@@ -113,6 +113,7 @@
           </div>
           <div class="text-right">
           <button type="submit" class="btn btn-primary">Recuperar Senha</button>
+          <p>{{statusReset}}</p>
           </div>
         </form>
       </div>

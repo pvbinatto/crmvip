@@ -12,6 +12,25 @@
 
   <!-- Sidebar -->
   <div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <div
+          class="img-circle elevation-2 bg-light"
+          style="
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+          "
+          alt="User Image"
+        >
+          PB
+        </div>
+      </div>
+      <div class="info">
+        <a href="" class="d-block">Paulo Binatto</a>
+      </div>
+    </div>
     <nav class="mt-2">
       <ul
         class="nav nav-pills nav-sidebar flex-column"
@@ -22,25 +41,68 @@
         <li class="nav-item">
           <a [routerLink]="['/']" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p> Dashboard</p>
+            <p>Dashboard</p>
           </a>
         </li>
-        <!-- <li class="nav-item menu-open">
-          <a href="javascript: void(0)" class="nav-link">
-            <i class="nav-icon fas fa-copy"></i>
-            <p>
-              Configurações <i class="fas fa-cog right"></i>
-            </p>
+        <li class="nav-header">Pessoas</li>
+        <li class="nav-item">
+          <a href="pages/gallery.html" class="nav-link">
+            <i class="nav-icon far fa-user"></i>
+            <p>Colaboradores</p>
           </a>
-          <ul class="nav nav-treeview" style="display: none;">
-            <li class="nav-item">
-              <a [routerLink]="['logout']" class="nav-link">
-                <i class="fas fa-sign-out-alt nav-icon"></i>
-                <p>Sair</p>
-              </a>
-            </li>
-          </ul>
-        </li>         -->
+        </li>
+        <li class="nav-item">
+          <a href="pages/gallery.html" class="nav-link">
+            <i class="nav-icon fas fa-users"></i>
+            <p>Times</p>
+          </a>
+        </li>
+        <li class="nav-header">Atendimentos</li>
+        <li class="nav-item">
+          <a href="pages/gallery.html" class="nav-link">
+            <i class="nav-icon fas fa-comments"></i>
+            <p>Tickets</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="https://ajuda.vipautomacao.com.br" target="_blank" class="nav-link">
+            <i class="nav-icon fas fa-exclamation-circle"></i>
+            <p>Base de conhecimento</p>
+          </a>
+        </li>
+        <li class="nav-header">Financeiro</li>
+        <li class="nav-item">
+          <a href="pages/gallery.html" class="nav-link">
+            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+            <p>Faturas</p>
+          </a>
+        </li>
+        <li class="nav-header">Pagamentos</li>
+        <li class="nav-item">
+          <a href="pages/gallery.html" class="nav-link">
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>Contratos</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="pages/gallery.html" class="nav-link">
+            <i class="nav-icon fas fa-bars"></i>
+            <p>Serviços</p>
+          </a>
+        </li>
+        <li class="nav-header">Minha conta</li>
+        <li class="nav-item">
+          <a href="pages/gallery.html" class="nav-link">
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>Meus dados</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['logout']" class="nav-link">
+            <i class="fas fa-sign-out-alt nav-icon"></i>
+            <p>Sair</p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

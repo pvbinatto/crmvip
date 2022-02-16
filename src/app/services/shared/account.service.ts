@@ -83,6 +83,13 @@ export class AccountService {
     return result;
   }
 
+  async resetPass(user: any) {
+    const result = await this.http
+      .post<any>(`${environment.api}/users/resetPass`, user)
+      .toPromise();
+    return result;
+  }
+
   async verificaContratos(codigoInterno: any) {
     const result = await this.http
       .get<any>(
@@ -90,7 +97,6 @@ export class AccountService {
         this.getHeader()
       )
       .toPromise();
-      console.log(result);
     return result;
   }
 }

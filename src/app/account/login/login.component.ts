@@ -18,22 +18,39 @@ export class LoginComponent implements OnInit {
     email: ''
   }
 
+  person = {
+    name: "",
+    email: "",
+  }
+
   public showError = '';
   public loginError = false;
+  resetError = false;
+  statusReset = "";
 
   constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {}
 
   async onReset(){
-    console.log(this.resetPass);
+    const result = await this.accountService.resetPass(this.resetPass);
+    console.log(result);
+    if(result){
+      this.statusReset = "E-mail enviado com sucesso";
+    } else {
+      this.resetError = true;
+    }
   }
   
   async onSubmit() {
     try {
       const result = await this.accountService.login(this.user);
       if (result.status === 'confirmed') {
-        localStorage.setItem('token', result.token);
+        this.person.name = result.data.name;
+        this.person.email = result.data.email;
+        localStorage.setItem('token', result.data.company.token);
+        localStorage.setItem('business', JSON.stringify(result.data.company));
+        localStorage.setItem('person', JSON.stringify(this.person));
         this.showError = "";
         this.loginError = false;
         //redireciona para rota vazia novamente
