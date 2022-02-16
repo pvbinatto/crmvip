@@ -20,6 +20,8 @@ import { RegistrationComponent } from './account/registration/registration.compo
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { CommonModule } from '@angular/common';
+import { ResetComponent } from './account/reset/reset.component';
 
 const maskConfigFunction: () => Partial<IConfig> = () => {
   return {
@@ -40,7 +42,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     AuthenticationComponent,
     LogoutComponent,
     PasswordComponent,
-    RegistrationComponent    
+    RegistrationComponent,
+    ResetComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +54,7 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     NgxMaskModule.forRoot(maskConfigFunction),
     BrowserAnimationsModule,
     NgxSpinnerModule,
+    CommonModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

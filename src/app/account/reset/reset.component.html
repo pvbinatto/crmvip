@@ -1,1 +1,80 @@
-<p>reset works!</p>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="large"
+  type=""
+  color="#fff"
+  template='<i class="fas fa-circle-notch fa-spin fa-3x"></i>'
+  style="color: rgba(255, 255, 255, 0.5)"
+  ><p style="color: white">Aguarde...</p>
+</ngx-spinner>
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-md-4">
+      <div class="logo p-3">
+        <img src="assets/images/logo-2.png" alt="" srcset="" />
+      </div>
+
+      <div class="login">
+        <div class="login-components">
+          <div class="formulario p-3">
+            <form (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div
+                      [ngClass]="status ? '' : 'alert alert-danger'"
+                      [innerText]="showError"
+                    ></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="form.password">Senha</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="form.password"
+                          autocomplete="off"
+                          name="password"
+                          maxlength="12"
+                          [(ngModel)]="user.password"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="form.passwordConfirm"
+                          >Confirme a senha</label
+                        >
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="form.passwordConfirm"
+                          autocomplete="off"
+                          name="passwordConfirm"
+                          maxlength="12"
+                          [(ngModel)]="user.passwordConfirm"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                      <button
+                        type="submit"
+                        class="btn btn-primary btn-lg btn-block mt-3"
+                      >
+                        Continuar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 password"></div>
+  </div>
+</div>

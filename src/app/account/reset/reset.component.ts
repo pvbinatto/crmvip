@@ -19,12 +19,34 @@ export class ResetComponent implements OnInit {
     phone: '',
   };
 
+  status = true;
+  showError = '';
+  loginError = false;
+
   constructor(
     private route: ActivatedRoute,
     private accountService: AccountService,
     private router: Router,
     private spinner: NgxSpinnerService
   ) {}
+
+  valida(user: any) {
+    if (user.password === '' || user.passwordConfirm === '') {
+      this.showError = 'Verifique suas senhas';
+      this.status = false;
+      this.loginError = false;
+      return false;
+    } else if (user.password !== user.passwordConfirm) {
+      this.showError = 'As senhas não são iguais';
+      this.status = false;
+      this.loginError = false;
+      return false;
+    }
+    this.status = true;
+    this.showError = '';
+    this.loginError = false;
+    return true;
+  }
 
   async getUserByHash() {
     this.spinner.show();
@@ -35,9 +57,16 @@ export class ResetComponent implements OnInit {
     this.spinner.hide();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getUserByHash();
+  }
 
-  onSubmit() {
-    this.router.navigate(['/']);
+  async onSubmit() {
+    if (this.valida(this.user)) {
+      const result = await this.accountService.updatePassword(this.user);
+      localStorage.setItem('token', result.company.token);
+      localStorage.setItem('business', JSON.stringify(result.company));
+      this.router.navigate(['/']);
+    }
   }
 }

@@ -11,7 +11,6 @@ export class AccountService {
 
   getHeader() {
     const token = localStorage.getItem('token');
-    console.log(token);
     let header = new HttpHeaders({ 'token': '' + token });
     const requestOptions = { headers: header };
     return requestOptions;
@@ -65,6 +64,14 @@ export class AccountService {
     delete user.passwordConfirm;
     const result = await this.http
       .post<any>(`${environment.api}/users`, user, this.getHeader())
+      .toPromise();
+    return result;
+  }
+
+  async updatePassword(user: any) {
+    delete user.passwordConfirm;
+    const result = await this.http
+      .post<any>(`${environment.api}/users/updatepassword`, user, this.getHeader())
       .toPromise();
     return result;
   }

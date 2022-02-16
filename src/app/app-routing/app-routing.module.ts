@@ -9,6 +9,7 @@ import { AuthGuard } from '../account/shared/auth.guard';
 import { LogoutComponent } from '../account/logout/logout.component';
 import { PasswordComponent } from '../account/password/password.component';
 import { RegistrationComponent } from '../account/registration/registration.component';
+import { ResetComponent } from '../account/reset/reset.component';
 
 const routes: Routes = [
   // {path: '', redirectTo: '', pathMatch: 'full'},
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'create-account', component: CreateAccountComponent },
       { path: 'password', component: PasswordComponent},
       { path: 'registration', component: RegistrationComponent},
+      { path: 'reset', component: ResetComponent},
     ],
   },
 ];

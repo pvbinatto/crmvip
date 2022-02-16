@@ -80,7 +80,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.strLocal = localStorage.getItem('business');
     this.business = JSON.parse(this.strLocal);
-    this.business.password = '';
     this.razaosocial = this.business.company.toLowerCase();
 
     this.contratos();

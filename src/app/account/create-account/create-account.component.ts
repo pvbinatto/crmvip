@@ -87,7 +87,6 @@ export class CreateAccountComponent implements OnInit {
   async onSubmit() {
     try {
       this.spinner.show();
-      console.log('foi')
       if (this.validaDados(this.user)) {
         const result = await this.accountService.verifyAccount(this.user);
         if (result.status === 'error') {
@@ -96,7 +95,7 @@ export class CreateAccountComponent implements OnInit {
         } else {
           var business = result;
           const insertCad = await this.accountService.createAccount(business);
-          //window.localStorage.setItem('token', result.token);
+          localStorage.setItem('token', result.token);
           this.clearObject(this.user);
           this.mensagemErro('');
           this.router.navigate(['/registration', {id: insertCad.token}]);
