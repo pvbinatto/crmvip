@@ -99,7 +99,7 @@ export class CreateAccountComponent implements OnInit {
           //window.localStorage.setItem('token', result.token);
           this.clearObject(this.user);
           this.mensagemErro('');
-          this.router.navigate(['/password', {id: insertCad.token}]);
+          this.router.navigate(['/registration', {id: insertCad.token}]);
           this.spinner.hide();
         }
         this.spinner.hide();

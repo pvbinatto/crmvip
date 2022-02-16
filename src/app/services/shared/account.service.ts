@@ -11,6 +11,7 @@ export class AccountService {
 
   getHeader() {
     const token = localStorage.getItem('token');
+    console.log(token);
     let header = new HttpHeaders({ 'token': '' + token });
     const requestOptions = { headers: header };
     return requestOptions;
@@ -18,15 +19,9 @@ export class AccountService {
 
   async login(user: any) {
     const result = await this.http
-      .post<any>(`${environment.api}/empresa/login`, user)
+      .post<any>(`${environment.api}/users/login`, user)
       .toPromise();
-    if (result && result.status === 'confirmed') {
-      window.localStorage.setItem('token', result.token);
-      return result.status;
-    } else {
       return result;
-    }
-    return false;
   }
 
   async verifyAccount(account: any) {
@@ -34,6 +29,15 @@ export class AccountService {
     const result = await this.http
       .get<any>(`${environment.api}/business/verificacadastro/${account.cnpj}`)
       .toPromise();
+    return result;
+  }
+
+  async verificaHashUser(hash: any) {
+    this.spinner.show();
+    const result = await this.http
+      .get<any>(`${environment.api}/users/verificabyhash/${hash}`)
+      .toPromise();
+      this.spinner.hide();
     return result;
   }
 
@@ -54,6 +58,14 @@ export class AccountService {
       .post<any>(`${environment.api}/business/`, business)
       .toPromise();
       this.spinner.hide();
+    return result;
+  }
+
+  async createUser(user: any) {
+    delete user.passwordConfirm;
+    const result = await this.http
+      .post<any>(`${environment.api}/users`, user, this.getHeader())
+      .toPromise();
     return result;
   }
 

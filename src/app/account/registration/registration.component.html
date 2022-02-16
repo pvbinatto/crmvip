@@ -58,6 +58,17 @@
                   [(ngModel)]="business.company"
                 />
               </div>
+              <div class="form-group">
+                <label for="form.user.name">Responsável</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="form.user.name"
+                  autocomplete="off"
+                  name="name"
+                  [(ngModel)]="user.name"
+                />
+              </div>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -125,7 +136,7 @@
                       autocomplete="off"
                       name="password"
                       maxlength="12"
-                      [(ngModel)]="business.password"
+                      [(ngModel)]="user.password"
                     />
                   </div>
                 </div>
@@ -139,7 +150,7 @@
                       autocomplete="off"
                       name="passwordConfirm"
                       maxlength="12"
-                      [(ngModel)]="business.passwordConfirm"
+                      [(ngModel)]="user.passwordConfirm"
                     />
                   </div>
                 </div>

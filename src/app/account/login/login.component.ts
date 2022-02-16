@@ -11,8 +11,12 @@ export class LoginComponent implements OnInit {
   
   user = {
     email: '',
-    senha: '',
+    password: '',
   };
+
+  resetPass = {
+    email: ''
+  }
 
   public showError = '';
   public loginError = false;
@@ -20,11 +24,16 @@ export class LoginComponent implements OnInit {
   constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {}
+
+  async onReset(){
+    console.log(this.resetPass);
+  }
   
   async onSubmit() {
     try {
       const result = await this.accountService.login(this.user);
-      if (result === 'confirmed') {
+      if (result.status === 'confirmed') {
+        localStorage.setItem('token', result.token);
         this.showError = "";
         this.loginError = false;
         //redireciona para rota vazia novamente
@@ -35,6 +44,7 @@ export class LoginComponent implements OnInit {
       }
     } catch (error) {
       console.log(error);
+      
     }
   }
 }

@@ -9,7 +9,10 @@
             <img src="assets/images/logo-2.png" alt="" srcset="" />
           </div>
           <h1>Login</h1>
-          <p>Primeiro acesso? <a [routerLink]="['/create-account']">Faça seu cadastro</a></p>
+          <p>
+            Primeiro acesso?
+            <a [routerLink]="['/create-account']">Faça seu cadastro</a>
+          </p>
           <div class="form mt-4">
             <form (ngSubmit)="onSubmit()" #form="ngForm">
               <div class="form-group" *ngIf="loginError">
@@ -28,13 +31,13 @@
                 <small id="form.email" class="form-text text-muted"></small>
               </div>
               <div class="form-group">
-                <label for="form.senha">Senha</label>
+                <label for="form.password">Senha</label>
                 <input
                   type="password"
                   class="form-control"
-                  id="form.senha"
+                  id="form.password"
                   name="senha"
-                  [(ngModel)]="user.senha"
+                  [(ngModel)]="user.password"
                 />
               </div>
               <div class="form-check">
@@ -55,18 +58,64 @@
                 Acessar
               </button>
               <div class="text-center mt-4">
-                <a href="">Esqueceu sua senha?</a>
+                <a href="" data-toggle="modal" data-target="#modal"
+                  >Esqueceu sua senha?</a
+                >
               </div>
             </form>
           </div>
         </div>
       </div>
       <div class="footer text-center">
-        <h3>
-          ©2009–2022 Todos os direitos reservados.
-        </h3>
+        <h3>©2009–2022 Todos os direitos reservados.</h3>
       </div>
     </div>
     <div class="right col-md-7 col-lg-8 bg-primary text-white"></div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modal"
+  #ModalMedium
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Recuperar Senha</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onReset()" #form="ngForm">
+          <div class="form-group" *ngIf="loginError">
+            <div class="alert alert-danger" [innerText]="showError"></div>
+          </div>
+          <div class="form-group">
+            <label for="form.emailReset">E-mail</label>
+            <input
+              type="email"
+              class="form-control"
+              id="form.emailReset"
+              name="email"
+              [(ngModel)]="resetPass.email"
+              required
+            />
+          </div>
+          <div class="text-right">
+          <button type="submit" class="btn btn-primary">Recuperar Senha</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
