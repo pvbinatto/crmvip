@@ -1,0 +1,123 @@
+<div class="text-right">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true"><i class="far fa-caret-square-right"></i></span>
+  </button>
+</div>
+<h4>Adicione produtos ao seu contrato</h4>
+<hr />
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="form-group" *ngIf="loginError">
+    <div class="alert alert-danger" [innerText]="showError"></div>
+  </div>
+  <div class="form-group">
+    <div id="accordion" *ngFor="let categoria of contratoItem">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h4 class="card-title w-100">
+            <a
+              class="d-block w-100 collapsed"
+              data-toggle="collapse"
+              href=""
+              [href]="'#tab' + categoria.id"
+              [id]="'' + categoria.id"
+              aria-expanded="false"
+            >
+              {{ categoria.name }}
+            </a>
+          </h4>
+        </div>
+        <div
+          [id]="'tab' + categoria.id"
+          class="collapse"
+          data-parent="#accordion"
+        >
+          <div class="card-body">
+            <div class="row">
+              <div
+                class="col-6 col-sm-4 col-md-3"
+                *ngFor="let produto of categoria.products"
+              >
+                <div class="card p-2 text-center produtos">
+                  <img
+                    *ngIf="produto.link_imagem !== null; else semImagem"
+                    src="{{ produto.link_imagem }}"
+                  />
+                  <ng-template #semImagem
+                    ><img src="assets/images/favicon.png"
+                  /></ng-template>
+                  <h5>
+                    {{ produto.name | titlecase }}
+                  </h5>
+                  <h6>
+                    {{ produto.price | currency: "BRL" }} {{ produto.period }}
+                  </h6>
+                  <div>
+                    <button
+                      class="btn btn-sm btn-success btn-block"
+                      [id]="produto.id"
+                      (click)="addCart(produto)"
+                      type="button"
+                    >
+                      Adicionar
+                    </button>
+                    <button
+                      class="btn btn-sm btn-danger btn-block hidden"
+                      [id]="'rem-' + produto.id"
+                      (click)="removeCart(produto.id)"
+                      type="button"
+                      hidden
+                    >
+                      Remover
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  -->
+  </div>
+  <div class="mb-4">
+    <h4>Resumo do seu pedido</h4>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Nome</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let prod of cart">
+        <tr>
+          <td>{{ prod.id }}</td>
+          <td>{{ prod.name }}</td>
+          <td>{{ prod.price }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="form-check mt-2 mb-2">
+    <input
+      class="form-check-input"
+      required
+      name="confirmo"
+      [(ngModel)]="confirmo"
+      type="checkbox"
+      value=""
+      id="flexCheckDefault"
+    />
+    <label class="form-check-label" for="flexCheckDefault">
+      Concordo com os <a href="">termos e políticas de serviço</a>
+    </label>
+  </div>
+  <button
+    type="submit"
+    [disabled]="!temProduto"
+    class="btn btn-primary btn-lg btn-block mt-3"
+  >
+    Continuar
+  </button>
+</form>

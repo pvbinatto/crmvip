@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from 'src/app/services/shared/account.service';
+import { ContratoService } from '../services/contrato.service';
 
 @Component({
   selector: 'app-home',
@@ -21,22 +21,7 @@ export class HomeComponent implements OnInit {
     departamento: 'Suporte',
     status: 'Fechado',
     atualizacao: '03/02/2022 (19:25)'
-  },{
-    id: 1515454,
-    departamento: 'Suporte',
-    status: 'Fechado',
-    atualizacao: '03/02/2022 (19:25)'
-  },{
-    id: 1515454,
-    departamento: 'Suporte',
-    status: 'Fechado',
-    atualizacao: '03/02/2022 (19:25)'
-  },{
-    id: 1515454,
-    departamento: 'Suporte',
-    status: 'Aberto',
-    atualizacao: '03/02/2022 (19:25)'
-  },]
+  }]
 
   parcelas = [{
     id: 138598,
@@ -44,37 +29,35 @@ export class HomeComponent implements OnInit {
     vencimento: '10/02/2022',
     total: 'R$ 548,90',
     status: 'PAGA'
-  },{
-    id: 138598,
-    emissao: '05/02/2022',
-    vencimento: '10/02/2022',
-    total: 'R$ 548,90',
-    status: 'PAGA'
-  },{
-    id: 138598,
-    emissao: '05/02/2022',
-    vencimento: '10/02/2022',
-    total: 'R$ 548,90',
-    status: 'PAGA'
-  },{
-    id: 138598,
-    emissao: '05/02/2022',
-    vencimento: '10/02/2022',
-    total: 'R$ 548,90',
-    status: 'PAGA'
   }]
+
+  servicos_contratados: any;
+  status_servico: any;
+  valorTotal: any;
 
 
   constructor(
-    private accountService: AccountService,
+    private contratoService: ContratoService
   ) {}
+
+  getSum(): number {
+    let sum = 0;
+    for (let i = 0; i < this.servicos_contratados.length; i++) {
+      sum += parseFloat(this.servicos_contratados[i].valor);
+    }
+    return sum;
+  }
 
   async contratos(){
     this.servicos = '?';
     this.atendimentos = 34;
     this.faturas = 1;
-    const contratos = await this.accountService.verificaContratos(this.business.codigoInterno);
-    this.servicos = contratos.itens.length;
+    const contratos = await this.contratoService.verificaContratos(this.business.codigoInterno);
+    console.log(contratos);
+    this.servicos = contratos.length;
+    this.servicos_contratados = contratos;
+    this.valorTotal = this.getSum();
+
   }
 
   ngOnInit(): void {

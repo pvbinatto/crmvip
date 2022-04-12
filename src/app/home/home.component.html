@@ -1,11 +1,3 @@
-<ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="large"
-  color="#fff"
-  template='<i class="fas fa-circle-notch fa-spin fa-3x"></i>'
-  style="color: rgba(255, 255, 255, 0.5)"
-  ><p style="color: white">Aguarde...</p>
-</ngx-spinner>
 <div class="content-wrapper p-3">
   <!-- Content Header (Page header) -->
   <div class="content-header">
@@ -88,12 +80,12 @@
     <div class="col-lg-6 col-12">
       <div class="card card-primary card-outline">
         <div class="card-header border-transparent">
-          <h3 class="card-title">Últimas Faturas</h3>
+          <h3 class="card-title">Produtos / Serviços</h3>
           <div class="card-tools">
             <a
-              href="javascript:void(0)"
+              [routerLink]="'/contrato'"
               class="btn btn-sm btn-primary float-right"
-              >Ver todas <i class="fa fa-search"></i
+              >Ver todos <i class="fa fa-search"></i
             ></a>
           </div>
         </div>
@@ -103,21 +95,28 @@
             <table class="table m-0">
               <thead>
                 <tr>
-                  <th>Fatura</th>
-                  <th>Emissão</th>
-                  <th>Vencimento</th>
-                  <th>Total</th>
+                  <th>#ID</th>
+                  <th>Serviço</th>
+                  <th>Valor</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let parcela of parcelas">
-                  <td>{{ parcela.id }}</td>
-                  <td>{{ parcela.emissao }}</td>
-                  <td>{{ parcela.vencimento }}</td>
-                  <td>{{ parcela.total }}</td>
+                <tr *ngFor="let itens of servicos_contratados">
+                  <td>{{ itens.CODIGO }}</td>
+                  <td>{{ itens.produto.name | titlecase }}</td>
+                  <td>{{ itens.valor | currency: "BRL" }}</td>
                   <td>
-                    <span class="badge bg-success">{{ parcela.status }}</span>
+                    <span
+                      class="badge bg-danger"
+                      *ngIf="itens.contrato.cancelado === 'S'"
+                      >Inativo</span
+                    >
+                    <span
+                      class="badge bg-success"
+                      *ngIf="itens.contrato.cancelado === 'N'"
+                      >Ativo</span
+                    >
                   </td>
                 </tr>
               </tbody>
@@ -125,7 +124,9 @@
           </div>
         </div>
 
-        <div class="card-footer clearfix"></div>
+        <div class="card-footer text-right">
+          <h3 class="text-success">Valor total: {{ valorTotal | currency: "BRL" }}</h3>
+        </div>
       </div>
     </div>
 

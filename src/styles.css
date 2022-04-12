@@ -1,15 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap");
 
 .brand-link {
-    display: block;
-    font-size: 32px;
-    line-height: 29px;
-    padding: .8125rem .5rem;
-    transition: width .3s ease-in-out;
-    white-space: nowrap;
-    font-weight: 700!important;
+  display: block;
+  font-size: 32px;
+  line-height: 29px;
+  padding: 0.8125rem 0.5rem;
+  transition: width 0.3s ease-in-out;
+  white-space: nowrap;
+  font-weight: 700 !important;
 }
 
 .btn-primary {
-    background-color: rgb(98, 77, 227);
-  }
+  background-color: rgb(98, 77, 227);
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.loading .icon {
+  margin: auto;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.btn {
+  margin: 3px 5px;
+}

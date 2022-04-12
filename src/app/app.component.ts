@@ -11,11 +11,14 @@ export class AppComponent {
   titleS = 'spinner';
   spinnerType:any;
   spinnerName: any;
+  isLoading = false;
 
 
   constructor(private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
+
+    this.spinner.show();
 
   }
 }

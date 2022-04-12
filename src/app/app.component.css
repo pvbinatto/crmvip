@@ -1,3 +1,23 @@
+body {
+  font-family: 'Inter', sans-serif!important;
+}
 .btn-primary {
   background-color: #2a2257;
+}
+
+.tabela-responsive {
+  width: 100%!important;
+  overflow-x: auto!important;
+}
+@media (max-width: 991.98px) {
+  .pl-5, .px-5 {
+    padding-left: 0rm!important;
+  }
+  .pr-5, .px-5 {
+    padding-right: 0rm!important;
+  }
+  .tabela-responsive {
+    width: 100%;
+    overflow-x: auto;
+  }
 }

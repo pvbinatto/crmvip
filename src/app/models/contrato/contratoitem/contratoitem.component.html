@@ -1,0 +1,48 @@
+<div class="text-right">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true"><i class="far fa-caret-square-right"></i></span>
+  </button>
+</div>
+<h4>{{ product.produto.name }}</h4>
+<hr />
+<div class="card">
+  <div class="card-body">
+    <b>Status do item: </b>
+    <span *ngIf="product.cancelado === 'S'">
+      <span class="badge bg-danger"> Cancelado</span><br />
+      <b>Data do cancelamento:</b>
+      {{ product.dataCancelado | date: "dd/MM/yyyy H:m" }}
+      <br>
+      <button class="btn btn-success btn-sm ml-0" (click)="reativarItem(product)">Reativar item</button>
+    </span>
+    <span class="badge bg-success" *ngIf="product.cancelado === 'N'">
+      Ativo</span
+    >
+  </div>
+</div>
+<p>
+  <b>Contrato com início em:</b>
+  {{ product.contrato.inicioEm | date: "dd/MM/yyyy" }}
+</p>
+<p><b>Valor do item:</b> {{ product.valor | currency: "BRL" }}</p>
+<p><b>Observações:</b> {{ product.observacao }}</p>
+<p>
+  <b>Plano de Pagamento:</b>
+  {{ product.contrato.periodicidade === "1" ? "Mensal" : "Anual" }}
+</p>
+<p><b>Forma de pagamento:</b> <i class="fas fa-barcode"></i> Boleto Bancário</p>
+<p>
+  <b>Próximo vencimento:</b>
+  {{ product.contrato.liberadoAte | date: "dd/MM/yyyy" }}
+</p>
+
+<div class="row">
+  <div class="col-12">
+    <button class="btn btn-danger" *ngIf="product.cancelado === 'N'" (click)="habilitaCancel(product)">
+      Solicitar cancelamento
+    </button>
+    <button data-dismiss="modal" aria-label="Close" class="btn btn-light">
+      Fechar
+    </button>
+  </div>
+</div>

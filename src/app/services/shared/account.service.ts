@@ -90,13 +90,5 @@ export class AccountService {
     return result;
   }
 
-  async verificaContratos(codigoInterno: any) {
-    const result = await this.http
-      .get<any>(
-        `${environment.api}/contrato/selecionaporcliente/${codigoInterno}`,
-        this.getHeader()
-      )
-      .toPromise();
-    return result;
-  }
+  
 }

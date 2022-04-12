@@ -10,6 +10,7 @@ import { LogoutComponent } from '../account/logout/logout.component';
 import { PasswordComponent } from '../account/password/password.component';
 import { RegistrationComponent } from '../account/registration/registration.component';
 import { ResetComponent } from '../account/reset/reset.component';
+import { ContratoComponent } from '../models/contrato/contrato.component';
 
 const routes: Routes = [
   // {path: '', redirectTo: '', pathMatch: 'full'},
@@ -17,7 +18,8 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: '', component: HomeComponent }
+      { path: '', component: HomeComponent },
+      { path: 'contrato', component: ContratoComponent },
     ],
     canActivate: [AuthGuard],
   },
