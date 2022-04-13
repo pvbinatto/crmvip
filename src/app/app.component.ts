@@ -18,7 +18,5 @@ export class AppComponent {
 
   ngOnInit() {
 
-    this.spinner.show();
-
   }
 }

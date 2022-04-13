@@ -53,7 +53,6 @@ export class HomeComponent implements OnInit {
     this.atendimentos = 34;
     this.faturas = 1;
     const contratos = await this.contratoService.verificaContratos(this.business.codigoInterno);
-    console.log(contratos);
     this.servicos = contratos.length;
     this.servicos_contratados = contratos;
     this.valorTotal = this.getSum();

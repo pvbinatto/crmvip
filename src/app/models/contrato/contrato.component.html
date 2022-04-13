@@ -59,7 +59,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let iten of itens_contratados">
-                  <td>{{ iten.CODIGO }}</td>
+                  <td>{{ iten.produto.id }}</td>
                   <td>{{ iten.produto.name | titlecase }} <span *ngIf="iten.produto.id !== '5'">(<em>Adicional</em>)</span></td>
                   <td class="text-right">{{ iten.valor | currency: "BRL" }}</td>
                   <td class="text-center">

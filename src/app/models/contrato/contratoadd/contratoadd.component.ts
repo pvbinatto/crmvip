@@ -46,23 +46,22 @@ export class ContratoaddComponent implements OnInit {
   cat: any = [];
   cart: any = [];
   itens_contrato: any = [];
+  itens_disponiveis: any;
 
   public async getProdutos() {
     const produtosHabilitados = await this.produtoService.getProdutosWs();
     this.contratoItem = produtosHabilitados;
+    let ob: any;
     for (let i = 0; i < produtosHabilitados.length; i++) {
-      const ob = produtosHabilitados[i];
+      ob = produtosHabilitados[i];
+      //Pega os produtos
       for (let x = 0; x < ob.products.length; x++) {
         const ob2 = ob.products[x];
+        //Pega os produtos contratados
         for (let p = 0; p < this.itens_contrato.length; p++) {
           const contratados = this.itens_contrato[p];
-          if (contratados.produto.id === ob2.id) {
-            const removeIndex = ob.products
-              .map(function (item: any) {
-                return item.id;
-              })
-              .indexOf(contratados.produto.id);
-            ob.products.splice(removeIndex, 1);
+          if (contratados.produto.id === ob2.id) { //Verifica se o produto contratado está na lista
+            ob.products.splice( ob.products.findIndex((obj:any) => obj.id === contratados.produto.id) , 1);
           }
         }
       }
@@ -88,12 +87,12 @@ export class ContratoaddComponent implements OnInit {
 
   verificaBotao(id: any, type: any) {
     if (type === 'showRemove') {
-      const b = document.getElementById(id);
+      const b = document.getElementById('pd-'+id);
       const a = document.getElementById('rem-' + id);
       a?.removeAttribute('hidden');
       b?.setAttribute('hidden', 'hidden');
     } else {
-      const a = document.getElementById(id);
+      const a = document.getElementById('pd-'+id);
       const b = document.getElementById('rem-' + id);
       a?.removeAttribute('hidden');
       b?.setAttribute('hidden', 'hidden');
