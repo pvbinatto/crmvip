@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
     }
     return sum;
   }
-
+ 
   async contratos(){
     this.servicos = '?';
     this.atendimentos = 34;
