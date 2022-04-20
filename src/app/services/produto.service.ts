@@ -19,7 +19,7 @@ export class ProdutoService {
     return requestOptions;
   }
 
-  async getProdutosWs() {
+  async getProdutosCategoryWs() {
     const result = await this.http
       .get<any>(`${environment.api}/products/products_category/`, this.getHeader())
       .toPromise();
@@ -28,6 +28,13 @@ export class ProdutoService {
 
   getProdutos() {
     return this.produtos;
+  }
+
+  async produtosWs(ob: any){
+    const result = await this.http
+      .post<any>(`${environment.api}/products/`, ob, this.getHeader())
+      .toPromise();
+    return result;
   }
 
   setProdutos(produtos: any) {

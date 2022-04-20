@@ -46,7 +46,7 @@
           <div class="card-body">
             <table
               id="dataTable"
-              class="table table-bordered table-striped table-hover dataTable dtr-inline collapsed tabela-responsive table-responsive"
+              class="table table-sm table-bordered table-striped table-hover dataTable dtr-inline collapsed tabela-responsive table-responsive"
             >
               <thead>
                 <tr>
@@ -58,6 +58,9 @@
                 </tr>
               </thead>
               <tbody>
+                <tr *ngIf="itens_contratados === undefined">
+                  <td class="text-center" colspan="5" >Carregando ... <i class="fas fa-circle-notch fa-spin"></i></td>
+                </tr>
                 <tr *ngFor="let iten of itens_contratados">
                   <td>{{ iten.produto.id }}</td>
                   <td>{{ iten.produto.name | titlecase }} <span *ngIf="iten.produto.id !== '5'">(<em>Adicional</em>)</span></td>
@@ -72,34 +75,16 @@
                       >Ativo</span
                     >
                   </td>
-                  <td>
-                    <div class="btn-group">
-                      <button
-                        type="button"
-                        class="btn btn-light btn-sm dropdown-toggle"
-                        data-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        ...
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <button
-                          class="dropdown-item"
-                          type="button"
-                          data-toggle="modal"
-                          data-target="#exampleModal"
-                          (click)="detalhes(iten)"
-                        >
-                          Ver detalhes
-                        </button>
-                      </div>
-                    </div>
+                  <td class="text-center">
+                    <a href="" data-toggle="modal"
+                    data-target="#exampleModal"
+                    (click)="detalhes(iten)" class="text-primary"><i class="fas fa-edit"></i></a>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div class="card-footer text-right">
+          <div class="card-footer text-right" *ngIf="itens_contratados !== undefined">
             <p><i>Valor total dos itens ativos no contrato</i></p>
             <h3 class="text-success">Valor total: {{ totalContrato | currency: "BRL" }}</h3>
           </div>

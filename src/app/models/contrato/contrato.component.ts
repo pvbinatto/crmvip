@@ -1,10 +1,9 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ContratoService } from 'src/app/services/contrato.service';
 import { contratoItemService } from 'src/app/services/contratoitem.sevice';
+import { JqueryService } from 'src/app/services/jquery.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ProdutoService } from 'src/app/services/produto.service';
-
-declare var $: any;
 
 @Component({
   selector: 'app-contrato',
@@ -40,13 +39,12 @@ export class ContratoComponent implements OnInit {
   }
 
   public async contratos(type: any) {
-    this.spinner.show();
     this.business = localStorage.getItem('business');
     this.business = JSON.parse(this.business);
     const contratos = await this.contratoService.verificaContratos(
       this.business.codigoInterno
     );
-    this.spinner.hide();
+    console.log(contratos);
     this.itens_contratados = contratos;
     this.totalContrato = this.getSum();
     if (contratos.length > 0) {
@@ -54,18 +52,7 @@ export class ContratoComponent implements OnInit {
     }
 
     if (contratos && type === '') {
-      $(document).ready(function () {
-        $('#dataTable').DataTable({
-          columnDefs: [
-            {
-              targets: [3],
-              searchable: false,
-              orderable: false,
-              visible: true,
-            },
-          ],
-        });
-      });
+      JqueryService.jTable('3', 'asc');
     }
   }
 
@@ -76,7 +63,7 @@ export class ContratoComponent implements OnInit {
   }
 
   async getProdutos() {
-    const produtosGet = await this.produtoService.getProdutosWs();
+    const produtosGet = await this.produtoService.getProdutosCategoryWs();
     this.produtoService.emitirProdutos.emit(produtosGet);
     ProdutoService.enviouProdutos.emit(produtosGet);
     return produtosGet;

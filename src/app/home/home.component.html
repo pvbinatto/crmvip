@@ -20,12 +20,12 @@
       <div class="small-box bg-info">
         <div class="inner">
           <p class="mb-1">Serviços Contratados</p>
-          <h1 class="mt-0">{{ servicos }}</h1>
+          <h1 class="mt-0" [innerHTML]="servicos"></h1>
         </div>
         <div class="icon">
           <i class="ion ion-bag"></i>
         </div>
-        <a href="#" class="small-box-footer"
+        <a href="" [routerLink]="'contrato'" class="small-box-footer"
           >Ver contratos <i class="fas fa-arrow-circle-right"></i
         ></a>
       </div>
@@ -85,8 +85,7 @@
             <a
               [routerLink]="'/contrato'"
               class="btn btn-sm btn-primary float-right"
-              >Ver todos <i class="fa fa-search"></i
-            ></a>
+              ><i class="fa fa-plus"></i> Ver todos </a>
           </div>
         </div>
 
@@ -102,22 +101,25 @@
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td class="text-center" colspan="4" *ngIf="servicos_contratados === undefined">Carregando ... <i class="fas fa-circle-notch fa-spin"></i></td>
+                </tr>
                 <tr *ngFor="let itens of servicos_contratados">
-                  <td>{{ itens.CODIGO }}</td>
-                  <td>{{ itens.produto.name | titlecase }}</td>
-                  <td>{{ itens.valor | currency: "BRL" }}</td>
-                  <td>
-                    <span
-                      class="badge bg-danger"
-                      *ngIf="itens.contrato.cancelado === 'S'"
-                      >Inativo</span
-                    >
-                    <span
-                      class="badge bg-success"
-                      *ngIf="itens.contrato.cancelado === 'N'"
-                      >Ativo</span
-                    >
-                  </td>
+                    <td *ngIf="itens.cancelado === 'N'">{{ itens.CODIGO }}</td>
+                    <td *ngIf="itens.cancelado === 'N'">{{ itens.produto.name | titlecase }}</td>
+                    <td *ngIf="itens.cancelado === 'N'">{{ itens.valor | currency: "BRL" }}</td>
+                    <td *ngIf="itens.cancelado === 'N'">
+                      <span
+                        class="badge bg-danger"
+                        *ngIf="itens.cancelado === 'S'"
+                        >Inativo</span
+                      >
+                      <span
+                        class="badge bg-success"
+                        *ngIf="itens.cancelado === 'N'"
+                        >Ativo</span
+                      >
+                    </td>
                 </tr>
               </tbody>
             </table>
@@ -125,7 +127,9 @@
         </div>
 
         <div class="card-footer text-right">
-          <h3 class="text-success">Valor total: {{ valorTotal | currency: "BRL" }}</h3>
+          <h3 class="text-success" *ngIf="servicos_contratados !== undefined">
+            Valor total: {{ valorTotal | currency: "BRL" }}
+          </h3>
         </div>
       </div>
     </div>
@@ -133,7 +137,7 @@
     <div class="col-lg-6 col-12">
       <div class="card card-success card-outline">
         <div class="card-header border-transparent">
-          <h3 class="card-title">Últimos Atendimentos</h3>
+          <h3 class="card-title">Faturas</h3>
           <div class="card-tools">
             <a
               href="javascript:void(0)"
@@ -148,27 +152,29 @@
             <table class="table m-0">
               <thead>
                 <tr>
-                  <th>Protocolo</th>
-                  <th>Departamento</th>
+                  <th>Fatura Nº</th>
+                  <th>Data da Fatura</th>
+                  <th>Vencimento</th>
+                  <th>Valor</th>
                   <th>Status</th>
-                  <th>Última Atualização</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let ticket of tickets">
-                  <td>{{ ticket.id }}</td>
-                  <td>{{ ticket.departamento }}</td>
+                <tr *ngFor="let fat of parcelas">
+                  <td>{{ fat.id }}</td>
+                  <td>{{ fat.emissao }}</td>
+                  <td>{{ fat.vencimento }}</td>
+                  <td>{{ fat.total | currency: 'BRL' }}</td>
                   <td>
                     <span
                       [ngClass]="{
                         badge: true,
-                        'bg-info': ticket.status == 'Aberto',
-                        'bg-gray': ticket.status == 'Fechado'
+                        'bg-suceess': fat.pago == 'Paga',
+                        'bg-danger': fat.pago == 'Aberta'
                       }"
-                      >{{ ticket.status }}</span
+                      >{{ fat.pago }}</span
                     >
                   </td>
-                  <td>{{ ticket.atualizacao }}</td>
                 </tr>
               </tbody>
             </table>

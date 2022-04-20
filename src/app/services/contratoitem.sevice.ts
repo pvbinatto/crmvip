@@ -41,7 +41,6 @@ export class contratoItemService {
   }
 
   async removeItemContrato(item: any) {
-    console.log(item);
     const result = await this.http
       .post<any>(
         `${environment.api}/contratoitem/removeProduto/`,
@@ -49,7 +48,6 @@ export class contratoItemService {
         this.getHeader()
       )
       .toPromise();
-      console.log(result);
     return result;
   }
 }

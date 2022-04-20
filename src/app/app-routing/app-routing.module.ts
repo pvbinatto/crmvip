@@ -11,6 +11,7 @@ import { PasswordComponent } from '../account/password/password.component';
 import { RegistrationComponent } from '../account/registration/registration.component';
 import { ResetComponent } from '../account/reset/reset.component';
 import { ContratoComponent } from '../models/contrato/contrato.component';
+import { ProdutoComponent } from '../models/produto/produto.component';
 
 const routes: Routes = [
   // {path: '', redirectTo: '', pathMatch: 'full'},
@@ -20,6 +21,7 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent },
       { path: 'contrato', component: ContratoComponent },
+      { path: 'produto', component: ProdutoComponent },
     ],
     canActivate: [AuthGuard],
   },

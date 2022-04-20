@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="/" class="brand-link">
+  <a [routerLink]="['/']" class="brand-link">
     <img
       src="assets/images/favicon.png"
       alt="Central do Cliente Vip"
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="info">
-        <a href="" class="d-block">{{namePerson}}</a>
+        <a [routerLink]="['/']" class="d-block">{{namePerson}}</a>
       </div>
     </div>
     <nav class="mt-2">
@@ -44,7 +44,7 @@
             <p>Dashboard</p>
           </a>
         </li>
-        <li class="nav-header">Pessoas</li>
+        <!-- <li class="nav-header">Pessoas</li>
         <li class="nav-item">
           <a href="pages/gallery.html" class="nav-link">
             <i class="nav-icon far fa-user"></i>
@@ -76,16 +76,16 @@
             <i class="nav-icon fas fa-file-invoice-dollar"></i>
             <p>Faturas</p>
           </a>
-        </li>
+        </li> -->
         <li class="nav-header">Pagamentos</li>
         <li class="nav-item">
-          <a href="pages/gallery.html" class="nav-link">
+          <a [routerLink]="'/contrato'" class="nav-link">
             <i class="nav-icon fas fa-file-alt"></i>
             <p>Contratos</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="pages/gallery.html" class="nav-link">
+          <a [routerLink]="'/produto'" class="nav-link">
             <i class="nav-icon fas fa-bars"></i>
             <p>Serviços</p>
           </a>

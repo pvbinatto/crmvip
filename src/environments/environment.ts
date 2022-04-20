@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'http://crmvip.vip/api'
+  api: 'https://api.rest.vipautomacao.com.br' //'http://crmvip.vip/api'
 };
 
 /*

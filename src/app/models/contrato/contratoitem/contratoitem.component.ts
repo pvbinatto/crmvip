@@ -90,7 +90,6 @@ export class ContratoitemComponent implements OnInit {
     ContratoService.clicouContrato.subscribe((contrato) => {
       this.product = contrato;
     });
-    console.log(this.product);
     this.idproduto = this.product.CODIGO;
   }
 }

@@ -35,6 +35,9 @@ import { ProdutoComponent } from './models/produto/produto.component';
 import { AlertComponent } from './shared/alert/alert.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GlobalComponent } from './global/global/global.component';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { AlifeFileToBase64Module } from 'alife-file-to-base64';
+import { InvoicesComponent } from './models/invoices/invoices.component';
 
 registerLocaleData(ptBr);
 
@@ -65,6 +68,7 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     ProdutoComponent,
     AlertComponent,
     GlobalComponent,
+    InvoicesComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +81,8 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     NgxSpinnerModule,
     CommonModule,
     FontAwesomeModule,
+    CurrencyMaskModule,
+    AlifeFileToBase64Module
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' }],

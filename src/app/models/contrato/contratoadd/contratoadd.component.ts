@@ -49,7 +49,7 @@ export class ContratoaddComponent implements OnInit {
   itens_disponiveis: any;
 
   public async getProdutos() {
-    const produtosHabilitados = await this.produtoService.getProdutosWs();
+    const produtosHabilitados = await this.produtoService.getProdutosCategoryWs();
     this.contratoItem = produtosHabilitados;
     let ob: any;
     for (let i = 0; i < produtosHabilitados.length; i++) {
