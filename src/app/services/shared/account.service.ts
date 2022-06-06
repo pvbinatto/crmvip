@@ -7,20 +7,28 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AccountService {
-  constructor(private http: HttpClient, private spinner: NgxSpinnerService) {}
+  constructor(private http: HttpClient, private loading: NgxSpinnerService) {}
 
   getHeader() {
     const token = localStorage.getItem('token');
-    let header = new HttpHeaders({ 'token': '' + token });
+    let header = new HttpHeaders({ token: '' + token });
     const requestOptions = { headers: header };
     return requestOptions;
   }
+
+  getHeaderJson() {
+    let header = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const requestOptions = { headers: header };
+    return requestOptions;
+  }
+
+  corsHeader() {}
 
   async login(user: any) {
     const result = await this.http
       .post<any>(`${environment.api}/users/login`, user)
       .toPromise();
-      return result;
+    return result;
   }
 
   async verifyAccount(account: any) {
@@ -31,32 +39,48 @@ export class AccountService {
     return result;
   }
 
-  async verificaHashUser(hash: any) {
-    this.spinner.show();
+  async pesquisaCep(cep: any) {
+    cep = cep.replace(/\D/g, '');
     const result = await this.http
-      .get<any>(`${environment.api}/users/verificabyhash/${hash}`)
+      .get<any>(`https://viacep.com.br/ws/${cep}/json/`)
       .toPromise();
-      this.spinner.hide();
     return result;
   }
 
+  async verificaHashUser(hash: any) {
+    this.loading.show();
+    const result = await this.http
+      .get<any>(`${environment.api}/users/verificabyhash/${hash}`)
+      .toPromise();
+    this.loading.hide();
+    return result;
+  }
+
+  async consultaCnpjReceita(cnpj: any) {
+    console.log(cnpj);
+    const result = await this.http
+      .get<any>(`https://publica.cnpj.ws/cnpj/${cnpj}`, this.getHeaderJson())
+      .toPromise();
+      console.log(result);
+      return result;    
+  }
+
   async verificaToken(token: any) {
-    this.spinner.show();
+    this.loading.show();
     const result = await this.http
       .get<any>(`${environment.api}/business/verificatoken/${token}`)
       .toPromise();
-      this.spinner.hide();
+    this.loading.hide();
     return result;
   }
 
   async createAccount(business: any) {
-    this.spinner.show();
+    this.loading.show();
     delete business.passwordConfirm;
-    business.enabled = 1;
     const result = await this.http
       .post<any>(`${environment.api}/business/`, business)
       .toPromise();
-      this.spinner.hide();
+    this.loading.hide();
     return result;
   }
 
@@ -71,7 +95,11 @@ export class AccountService {
   async updatePassword(user: any) {
     delete user.passwordConfirm;
     const result = await this.http
-      .post<any>(`${environment.api}/users/updatepassword`, user, this.getHeader())
+      .post<any>(
+        `${environment.api}/users/updatepassword`,
+        user,
+        this.getHeader()
+      )
       .toPromise();
     return result;
   }
@@ -89,6 +117,4 @@ export class AccountService {
       .toPromise();
     return result;
   }
-
-  
 }

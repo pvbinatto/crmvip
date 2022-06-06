@@ -4,6 +4,55 @@
     background-position: 50%;
     flex: 1 1;
 }
+.logo img {
+    max-width: 300px;
+}
+
+.formulario {
+    width: 100%;
+}
+
+.bg-cinza {
+    background-color: #f9f9f9!important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-right: 8px solid #007bff;
+}
+.bg-branco {
+    background-color: #fff;
+    border: solid 1px #dfdfdf;
+    padding: 20px
+}
+
+.logo-branco img {
+    max-width: 100%;
+}
+.wizard .col-md-2 {
+    
+    text-align: center;
+}
+.wizard .item {
+    margin-left: 10px!important;
+    cursor: pointer;
+    padding: 10px;
+}
+.wizard  .active {
+    background-color: #fff;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    color: blue;
+    transition-delay: 50ms;
+    
+}
+.interno {
+    width: 536px;
+}
+
+.h100vh {
+    height: 100vh;
+}
 .content {
     height: 100vh;
     position: relative;

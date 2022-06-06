@@ -1,4 +1,4 @@
-<div class="text-right">
+<div class="text-right" *ngIf="hideContinuar">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true"><i class="far fa-caret-square-right"></i></span>
   </button>
@@ -34,7 +34,7 @@
           <div class="card-body">
             <div class="row">
               <div
-                class="col-6 col-sm-4 col-md-3"
+                class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6"
                 *ngFor="let produto of categoria.products"
               >
                 <div class="card p-2 text-center produtos">
@@ -54,7 +54,7 @@
                   <div>
                     <button
                       class="btn btn-sm btn-success btn-block"
-                      [id]="'pd-'+produto.id"
+                      [id]="'pd-' + produto.id"
                       (click)="addCart(produto)"
                       type="button"
                     >
@@ -78,7 +78,6 @@
         </div>
       </div>
     </div>
-    <!--  -->
   </div>
   <div class="mb-4">
     <h4>Resumo do seu pedido</h4>
@@ -94,9 +93,15 @@
         <tr>
           <td>{{ prod.id }}</td>
           <td>{{ prod.name }}</td>
-          <td>{{ prod.price }}</td>
+          <td class="text-right">{{ prod.price | currency: "BRL" }}</td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" class="text-right"><b>Total</b></td>
+          <td class="text-right"><b>{{ total_cart | currency: "BRL"}}</b></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 
@@ -107,6 +112,7 @@
       name="confirmo"
       [(ngModel)]="confirmo"
       type="checkbox"
+      (click)="verificaConfirmo()"
       value=""
       id="flexCheckDefault"
     />
@@ -117,6 +123,7 @@
   <button
     type="submit"
     [disabled]="!temProduto"
+    *ngIf="hideContinuar"
     class="btn btn-primary btn-lg btn-block mt-3"
   >
     Continuar

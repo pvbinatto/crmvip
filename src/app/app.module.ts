@@ -85,7 +85,7 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     AlifeFileToBase64Module
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{ provide: LOCALE_ID, useValue: 'pt' }],
+  providers: [ContratoaddComponent, ContratoComponent, { provide: LOCALE_ID, useValue: 'pt' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

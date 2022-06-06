@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
 import { contratoItemService } from 'src/app/services/contratoitem.sevice';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -12,13 +14,21 @@ declare var $: any;
   styleUrls: ['./contratoadd.component.css'],
 })
 export class ContratoaddComponent implements OnInit {
+  hideContinuar = true;
   constructor(
     private produtoService: ProdutoService,
     private contratoItemService: contratoItemService,
     private alert: AlertService,
     private contratoComponent: ContratoComponent,
-    private spinner: LoadingService
-  ) {}
+    private spinner: LoadingService,
+    private route: Router,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    console.log('this', this.document.location.pathname.split('/')[1]);
+    if (this.document.location.pathname.split('/')[1] === 'registration') {
+      this.hideContinuar = false;
+    }
+  }
 
   public showError = '';
   public loginError = false;
@@ -47,9 +57,11 @@ export class ContratoaddComponent implements OnInit {
   cart: any = [];
   itens_contrato: any = [];
   itens_disponiveis: any;
+  total_cart: any;
 
   public async getProdutos() {
-    const produtosHabilitados = await this.produtoService.getProdutosCategoryWs();
+    const produtosHabilitados =
+      await this.produtoService.getProdutosCategoryWs();
     this.contratoItem = produtosHabilitados;
     let ob: any;
     for (let i = 0; i < produtosHabilitados.length; i++) {
@@ -60,8 +72,14 @@ export class ContratoaddComponent implements OnInit {
         //Pega os produtos contratados
         for (let p = 0; p < this.itens_contrato.length; p++) {
           const contratados = this.itens_contrato[p];
-          if (contratados.produto.id === ob2.id) { //Verifica se o produto contratado está na lista
-            ob.products.splice( ob.products.findIndex((obj:any) => obj.id === contratados.produto.id) , 1);
+          if (contratados.produto.id === ob2.id) {
+            //Verifica se o produto contratado está na lista
+            ob.products.splice(
+              ob.products.findIndex(
+                (obj: any) => obj.id === contratados.produto.id
+              ),
+              1
+            );
           }
         }
       }
@@ -74,25 +92,46 @@ export class ContratoaddComponent implements OnInit {
     contratoItemService.enviouContrato.subscribe((contratos) => {
       this.itens_contrato = contratos;
     });
-    this.contrato = this.itens_contrato[0].contrato.CODIGO;
-  }
+    // console.log(this.itens_contrato);
+    if (this.itens_contrato.length > 0) {
+      this.contrato = this.itens_contrato[0].contrato.CODIGO;
+    }
 
+    localStorage.removeItem('confirmo');
+  }
+  verificaConfirmo() {
+    if (!this.confirmo) {
+      localStorage.setItem('confirmo', 'ok');
+    } else {
+      localStorage.removeItem('confirmo');
+    }
+  }
   verificaCart() {
     if (this.cart.length > 0) {
       this.temProduto = true;
     } else {
       this.temProduto = false;
     }
+    this.viewCart();
+  }
+
+  viewCart() {
+    let total = 0;
+    for (let ct = 0; ct < this.cart.length; ct++) {
+      const prdcart = this.cart[ct];
+      total += parseFloat(prdcart.price);
+    }
+    this.total_cart = total;
   }
 
   verificaBotao(id: any, type: any) {
     if (type === 'showRemove') {
-      const b = document.getElementById('pd-'+id);
+      const b = document.getElementById('pd-' + id);
       const a = document.getElementById('rem-' + id);
       a?.removeAttribute('hidden');
       b?.setAttribute('hidden', 'hidden');
     } else {
-      const a = document.getElementById('pd-'+id);
+      const a = document.getElementById('pd-' + id);
       const b = document.getElementById('rem-' + id);
       a?.removeAttribute('hidden');
       b?.setAttribute('hidden', 'hidden');
@@ -108,6 +147,8 @@ export class ContratoaddComponent implements OnInit {
       this.verificaBotao(produto.id, 'showRemove');
     }
     this.verificaCart();
+    localStorage.removeItem('cart');
+    localStorage.setItem('cart', JSON.stringify(this.cart));
   }
 
   removeCart(produtos: any) {
@@ -130,7 +171,7 @@ export class ContratoaddComponent implements OnInit {
         'Para continuar, você deve concordar com os termos de uso'
       );
     } else {
-      
+      localStorage.setItem('confirmo', 'ok');
       if (this.cart.length > 0) {
         let ob = {
           contrato: this.contrato,

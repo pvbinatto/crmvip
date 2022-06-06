@@ -7,15 +7,75 @@
   ><p style="color: white">Aguarde...</p>
 </ngx-spinner>
 <div class="container-fluid">
-  <div class="row content">
-    <div class="col-md-9">
-      <div class="logo p-3">
-        <img src="assets/images/logo-2.png" alt="" srcset="" />
-      </div>
-      <div class="formulario p-3">
-        <form (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-sm-12 d-block d-md-none logo-branco bg-primary">
+      <img src="assets/images/logo_branco.png" class="p-5" alt="" srcset="" />
+    </div>
+    <div
+      class="col-md-5 col-xl-3 col-lg-4 d-none d-md-block logo-branco pt-5 bg-primary h100vh"
+    >
+      <img src="assets/images/logo_branco.png" alt="" srcset="" />
+      <div class="row wizard mt-5 pt-5">
+        <div
+          class="col-12 item"
+          [ngClass]="tela1 ? 'active' : ''"
+          (click)="continuar(1)"
+        >
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-2">
+              <h1>1</h1>
+            </div>
+            <div class="col-md-10">
+              <h5>
+                Dados Principais<br />
+                <span class="pt-3 small">Informações da empresa</span>
+              </h5>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-12 mt-3 pt-3 item"
+          [ngClass]="tela2 ? 'active' : ''"
+          (click)="continuar(2)"
+        >
+          <div class="row">
+            <div class="col-md-2">
+              <h1>2</h1>
+            </div>
+            <div class="col-md-10">
+              <h5>
+                Endereço<br />
+                <span class="pt-3 small">Localidade da sua empresa</span>
+              </h5>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-12 mt-3 item pt-3"
+          [ngClass]="tela3 ? 'active' : ''"
+          (click)="continuar(3)"
+        >
+          <div class="row">
+            <div class="col-md-2">
+              <h1>3</h1>
+            </div>
+            <div class="col-md-10">
+              <h5>
+                Produtos<br />
+                <span class="pt-3 small">Módulos que irá utilizar</span>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7 col-xl-9 col-lg-8 bg-cinza">
+      <div class="row">
+        <div class="bg-branco interno">
+          <div class="formulario mt-3" *ngIf="tela1">
+            <h4>Informações da sua empresa</h4>
+            <hr>
+            <form (ngSubmit)="continuar(2)" class="needs-validation">
               <div class="form-group">
                 <div
                   [ngClass]="status ? '' : 'alert alert-danger'"
@@ -23,114 +83,359 @@
                 ></div>
               </div>
               <div class="form-group">
-                <label for="form.company">Razão Social</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="form.company"
-                  autocomplete="off"
-                  name="razaosocial"
-                  disabled
-                  [(ngModel)]="business.company"
-                />
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <label for="form.cpfcnpj">CNPJ</label>
+                    <div class="input-group mb-3">
+                      <input
+                        type="text"
+                        class="form-control text-center"
+                        id="form.cpfcnpj"
+                        autocomplete="off"
+                        name="cpfcnpj"
+                        [textMask]="{ mask: mask }"
+                        [disabled]="!showCNPJ"
+                        [(ngModel)]="business.cpfcnpj"
+                      />
+                      <div class="input-group-prepend">
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          id="button-addon1"
+                          (click)="pesquisa(business.cpfcnpj)"
+                        >
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+              <div *ngIf="temCNPJ">
+                <div class="form-group">
+                  <label for="form.company">Razão Social</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="form.company"
+                    autocomplete="off"
+                    name="razaosocial"
+                    disabled
+                    [(ngModel)]="business.company"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="form.company">Nome Fantasia</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="form.company"
+                    autocomplete="off"
+                    name="companyName"
+                    [(ngModel)]="business.companyName"
+                  />
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <label for="form.user.name">Responsável*</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="form.user.name"
+                      autocomplete="off"
+                      name="person"
+                      [ngClass]="{
+                        'is-valid': business.person != '',
+                        'is-invalid': business.person == ''
+                      }"
+                      [(ngModel)]="business.person"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label for="form.user.name">CPF*</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="form.user.name"
+                      autocomplete="off"
+                      name="name"
+                      [textMask]="{ mask: cpf }"
+                      required
+                      [ngClass]="{
+                        'is-valid': validCPF == 'true',
+                        'is-invalid': validCPF == 'false'
+                      }"
+                      (blur)="validaCPF(business.personDocument)"
+                      [(ngModel)]="business.personDocument"
+                    />
+                  </div>
+                </div>
+                <div class="form-group"></div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="form.email">E-mail*</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="form.email"
+                        autocomplete="off"
+                        name="email"
+                        [ngClass]="{
+                          'is-valid': validEmail == 'true',
+                          'is-invalid': validEmail == 'false'
+                        }"
+                        (blur)="validaEmail(business.email)"
+                        [(ngModel)]="business.email"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form.phone">Telefone</label>
+                      <input
+                        type="text"
+                        class="form-control telefone"
+                        id="form.phone"
+                        autocomplete="off"
+                        maxlength="15"
+                        mask="(00)00000-0000 || (00)0000-0000"
+                        name="phone"
+                        [ngClass]="{
+                          'is-valid':
+                            business.phone.length > 14 ||
+                            business.phone.length < 15,
+                          'is-invalid': business.phone.length === 0
+                        }"
+                        (blur)="validaTelefone(business.phone)"
+                        [(ngModel)]="business.phone"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form.cellphone">Celular</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="form.cellphone"
+                        autocomplete="off"
+                        name="cellphone"
+                        mask="(00)00000-0000 || (00)0000-0000"
+                        maxlength="15"
+                        [ngClass]="{
+                          'is-valid': validCel == 'true',
+                          'is-invalid': validCel == 'false'
+                        }"
+                        (blur)="validaTelefone(business.cellphone)"
+                        [(ngModel)]="business.cellphone"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form.password">Senha*</label>
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="form.password"
+                        autocomplete="off"
+                        name="password"
+                        maxlength="12"
+                        [ngClass]="{
+                          'is-valid': validPass == 'true',
+                          'is-invalid': validPass == 'false'
+                        }"
+                        (blur)="validaSenha(business.password)"
+                        [(ngModel)]="business.password"
+                      />
+                      <small *ngIf="validPass === 'false'"
+                        >A senha deve conter de 6 a 8 caracteres</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form.passwordConfirm"
+                        >Confirme a senha*</label
+                      >
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="form.passwordConfirm"
+                        autocomplete="off"
+                        name="passwordConfirm"
+                        maxlength="12"
+                        [ngClass]="{
+                          'is-valid': passConf == 'true',
+                          'is-invalid': passConf == 'false'
+                        }"
+                        (blur)="validaSenhaPass()"
+                        [(ngModel)]="business.passwordConfirm"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6"></div>
+                  <div class="col-md-6">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-lg btn-block mt-3"
+                    >
+                      Continuar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="formulario mt-3" *ngIf="tela2">
+            <h4>Endereço da sua empresa</h4>
+            <hr>
+            <form (ngSubmit)="continuar(3)">
               <div class="form-group">
-                <label for="form.user.name">Responsável</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="form.user.name"
-                  autocomplete="off"
-                  name="name"
-                  [(ngModel)]="user.name"
-                />
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="zipcode">CEP</label>
+                    <div class="input-group mb-3">
+                      <input
+                        type="text"
+                        class="form-control text-center"
+                        id="zipcode"
+                        autocomplete="off"
+                        name="zipcode"
+                        [textMask]="{ mask: cep }"
+                        [(ngModel)]="business.zipcode"
+                      />
+                      <div class="input-group-prepend">
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          id="button-addon1"
+                          (click)="pesquisaCEP(business.zipcode)"
+                        >
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div *ngIf="temCEP">
+                      <div class="row">
+                        <div class="col-md-8">
+                          <label>Endereço</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="endereco"
+                            autocomplete="off"
+                            name="address"
+                            [(ngModel)]="business.address"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <label>Número</label>
+                          <input
+                            type="text"
+                            #numero
+                            class="form-control"
+                            id="number"
+                            autocomplete="off"
+                            name="number"
+                            [(ngModel)]="business.number"
+                          />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Bairro</label>
+                          <input
+                            type="text"
+                            #numero
+                            class="form-control"
+                            id="district"
+                            autocomplete="off"
+                            name="district"
+                            [(ngModel)]="business.district"
+                          />
+                        </div>
+                        <div class="col-md-6">
+                          <label>Complemento</label>
+                          <input
+                            type="text"
+                            #numero
+                            class="form-control"
+                            id="complement"
+                            autocomplete="off"
+                            name="complement"
+                            [(ngModel)]="business.complement"
+                          />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-8">
+                          <label>Cidade</label>
+                          <input
+                            type="text"
+                            #numero
+                            class="form-control"
+                            id="city"
+                            autocomplete="off"
+                            name="city"
+                            [(ngModel)]="business.city"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <label>Estado</label>
+                          <select
+                            class="form-control"
+                            name="state"
+                            [(ngModel)]="business.state"
+                          >
+                            <option value="">Selecione</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form.cpfcnpj">CNPJ</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="form.cpfcnpj"
-                      autocomplete="off"
-                      name="cpfcnpj"
-                      disabled
-                      [(ngModel)]="business.cpfcnpj"
-                    />
-                  </div>
+                  <button
+                    (click)="continuar(1)"
+                    type="button"
+                    class="btn btn-light btn-lg btn-block mt-3"
+                  >
+                    Voltar
+                  </button>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form.email">E-mail</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="form.email"
-                      autocomplete="off"
-                      name="email"
-                      [(ngModel)]="business.email"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form.phone">Telefone</label>
-                    <input
-                      type="text"
-                      class="form-control telefone"
-                      id="form.phone"
-                      autocomplete="off"
-                      maxlength="15"
-                      mask="(00)00000-0000 || (00)0000-0000"
-                      name="phone"
-                      [(ngModel)]="business.phone"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form.cellphone">Celular</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="form.cellphone"
-                      autocomplete="off"
-                      name="cellphone"
-                      mask="(00)00000-0000 || (00)0000-0000"
-                      [(ngModel)]="business.cellphone"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form.password">Senha</label>
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="form.password"
-                      autocomplete="off"
-                      name="password"
-                      maxlength="12"
-                      [(ngModel)]="user.password"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form.passwordConfirm">Confirme a senha</label>
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="form.passwordConfirm"
-                      autocomplete="off"
-                      name="passwordConfirm"
-                      maxlength="12"
-                      [(ngModel)]="user.passwordConfirm"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6"></div>
                 <div class="col-md-6">
                   <button
                     type="submit"
@@ -140,11 +445,52 @@
                   </button>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
-        </form>
+          <div class="formulario mt-3" *ngIf="tela3">
+            <form (ngSubmit)="onSubmit()">
+              <h4>Informações sobre o pagamento</h4>
+              <hr />
+              <div class="row mb-5">
+                <div class="col-6">
+                  <label for="diaPagamento">Dia de Pagamento</label>
+                  <select class="form-control" name="diaPagamento" [(ngModel)]="contratoCliente.diaPagamento">
+                    <option selected value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label for="diaPagamento">Forma de Pagamento</label>
+                  <select class="form-control" readonly name="formaPagamento">
+                    <option selected value="">Boleto Bancário</option>
+                  </select>
+                </div>
+              </div>
+              <app-contratoadd></app-contratoadd>
+              <div class="row">
+                <div class="col-md-6">
+                  <button
+                    (click)="continuar(2)"
+                    type="button"
+                    class="btn btn-light btn-lg btn-block mt-3"
+                  >
+                    Voltar
+                  </button>
+                </div>
+                <div class="col-md-6">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-lg btn-block mt-3"
+                  >
+                    Finalizar Cadastro
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-3 password"></div>
   </div>
 </div>

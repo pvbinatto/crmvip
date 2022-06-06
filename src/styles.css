@@ -103,6 +103,19 @@
   margin: 3px 5px;
 }
 
+.input-group .input-group-prepend button {
+  margin-left: 0;
+  margin-top: 0;
+  padding: 6px 10px;
+  border-left: 0;
+  border-color: #ced4da;
+}
+
+.input-group input {
+  border-right: 0;
+  
+}
+
 .custom-control-input:checked~.custom-control-label::before {
   color: #fff;
   border-color: #8AC34A;

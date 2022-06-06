@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { GlobalComponent } from 'src/app/global/global/global.component';
 import { AccountService } from 'src/app/services/shared/account.service';
 
 @Component({
@@ -15,6 +16,8 @@ export class CreateAccountComponent implements OnInit {
     email: '',
     cnpj: '',
   };
+
+  mask = GlobalComponent.maskCNPJ;
 
   business = {
     company: '',
@@ -55,27 +58,6 @@ export class CreateAccountComponent implements OnInit {
     }
   }
 
-  public mask = [
-    /[1-9]/,
-    /\d/,
-    '.',
-    /\d/,
-    /\d/,
-    /\d/,
-    '.',
-    /\d/,
-    /\d/,
-    /\d/,
-    '/',
-    /\d/,
-    /\d/,
-    /\d/,
-    /\d/,
-    '-',
-    /\d/,
-    /\d/,
-  ];
-
   public validaDados(ob: any) {
     if (ob.cnpj === '') {
       this.mensagemErro('Verifique os dados que estão faltando');
@@ -86,25 +68,22 @@ export class CreateAccountComponent implements OnInit {
 
   async onSubmit() {
     try {
-      this.spinner.show();
       if (this.validaDados(this.user)) {
         const result = await this.accountService.verifyAccount(this.user);
-        if (result.status === 'error') {
-          this.mensagemErro(result.message);
-          this.spinner.hide();
+        if (!result) {
+          localStorage.setItem('cnpj', this.user.cnpj);
+          this.router.navigate(['/registration']);
         } else {
           var business = result;
+          console.log(business);
           const insertCad = await this.accountService.createAccount(business);
           localStorage.setItem('token', result.token);
           this.clearObject(this.user);
           this.mensagemErro('');
           this.router.navigate(['/registration', {id: insertCad.token}]);
-          this.spinner.hide();
         }
-        this.spinner.hide();
       }
     } catch (error) {
-      this.spinner.hide();
       console.error(error);
     }
   }
