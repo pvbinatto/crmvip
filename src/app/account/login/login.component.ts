@@ -8,61 +8,63 @@ import { AccountService } from 'src/app/services/shared/account.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  
   user = {
     email: '',
     password: '',
   };
 
   resetPass = {
-    email: ''
-  }
+    email: '',
+  };
 
   person = {
-    name: "",
-    email: "",
-  }
+    name: '',
+    email: '',
+  };
 
   public showError = '';
   public loginError = false;
   resetError = false;
-  statusReset = "";
+  statusReset = '';
 
   constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {}
 
-  async onReset(){
+  async onReset() {
     const result = await this.accountService.resetPass(this.resetPass);
     console.log(result);
-    if(result){
-      this.statusReset = "E-mail enviado com sucesso";
+    if (result) {
+      this.statusReset = 'E-mail enviado com sucesso';
     } else {
       this.resetError = true;
     }
   }
-  
+
   async onSubmit() {
     try {
       const result = await this.accountService.login(this.user);
-      console.log(result);
       if (result.status === 'confirmed') {
         this.person.name = result.data.name;
         this.person.email = result.data.email;
         localStorage.setItem('token', result.data.company.token);
         localStorage.setItem('business', JSON.stringify(result.data.company));
         localStorage.setItem('person', JSON.stringify(this.person));
-        this.showError = "";
+        if (result.data.lastlogin === null) {
+          const verifica = await this.accountService.verifyAccount(result.data);
+          console.log(verifica);
+        } else {
+          this.router.navigate(['']);
+        }
+        this.showError = '';
         this.loginError = false;
         //redireciona para rota vazia novamente
-        this.router.navigate(['']);
       } else {
         this.showError = result.message;
         this.loginError = true;
       }
     } catch (error) {
       console.log(error);
-      
     }
   }
 }

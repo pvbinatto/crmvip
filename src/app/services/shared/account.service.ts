@@ -26,6 +26,7 @@ export class AccountService {
   corsHeader() {}
 
   async login(user: any) {
+    console.log(user);
     const result = await this.http
       .post<any>(`${environment.api}/users/login`, user)
       .toPromise();
@@ -33,7 +34,8 @@ export class AccountService {
   }
 
   async verifyAccount(account: any) {
-    account.cnpj = account.cnpj.replace(/\D/g, '');
+    console.log(account.company);
+    account.cnpj = account.company.cpfcnpj.replace(/\D/g, '');
     const result = await this.http
       .get<any>(`${environment.api}/business/verificacadastro/${account.cnpj}`)
       .toPromise();

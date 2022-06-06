@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -31,13 +30,17 @@ export class CreateAccountComponent implements OnInit {
     complement: '',
     district: '',
     city: '',
-    state: ''
+    state: '',
   };
 
   public showError = '';
   public loginError = false;
 
-  constructor(private accountService: AccountService, private router: Router, private spinner: NgxSpinnerService) {}
+  constructor(
+    private accountService: AccountService,
+    private router: Router,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -62,8 +65,8 @@ export class CreateAccountComponent implements OnInit {
     if (ob.cnpj === '') {
       this.mensagemErro('Verifique os dados que estão faltando');
       return false;
-    } else if(!GlobalComponent.validarCNPJ(ob.cnpj)){
-      this.mensagemErro("Verifique o seu CNPJ");
+    } else if (!GlobalComponent.validarCNPJ(ob.cnpj)) {
+      this.mensagemErro('Verifique o seu CNPJ');
       return false;
     }
     return true;
@@ -73,16 +76,19 @@ export class CreateAccountComponent implements OnInit {
     try {
       if (this.validaDados(this.user)) {
         const result = await this.accountService.verifyAccount(this.user);
-        if (result.status === 'error') {
+        console.log(result);
+        if (!result) {
+          localStorage.setItem('cnpj', this.user.cnpj);
+          this.router.navigate(['/registration']);
+        } else if (result.status === 'error') {
           this.mensagemErro(result.message);
         } else {
           var business = result;
-          console.log(business);
           const insertCad = await this.accountService.createAccount(business);
           localStorage.setItem('token', result.token);
           this.clearObject(this.user);
           this.mensagemErro('');
-          this.router.navigate(['/registration', {id: insertCad.token}]);
+          this.router.navigate(['/registration', { id: insertCad.token }]);
         }
       }
     } catch (error) {

@@ -90,7 +90,6 @@ export class RegistrationComponent implements OnInit {
 
   async pesquisaCEP(cep: any) {
     let ceps = await this.accountService.pesquisaCep(cep);
-    console.log(ceps);
     this.business.address = ceps.logradouro;
     this.business.district = ceps.bairro;
     this.business.complement = ceps.complemento;
@@ -126,7 +125,6 @@ export class RegistrationComponent implements OnInit {
     // this.business.passwordConfirm = '123456';
     // this.validaSenha(this.business.password);
     // this.validaSenhaPass();
-    console.log(this.business);
   }
 
   validCel = '';
@@ -282,6 +280,7 @@ export class RegistrationComponent implements OnInit {
           products: JSON.parse(this.cart),
         },
       };
+      console.log(ob);
       const emp = await this.accountService.addNovo(ob);
       this.spinner.hide();
     }
