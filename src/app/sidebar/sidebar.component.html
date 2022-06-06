@@ -77,19 +77,18 @@
             <p>Faturas</p>
           </a>
         </li> -->
-        <li class="nav-header">Pagamentos</li>
         <li class="nav-item">
           <a [routerLink]="'/contrato'" class="nav-link">
             <i class="nav-icon fas fa-file-alt"></i>
             <p>Contratos</p>
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a [routerLink]="'/produto'" class="nav-link">
             <i class="nav-icon fas fa-bars"></i>
             <p>Serviços</p>
           </a>
-        </li>
+        </li> -->
         <li class="nav-header">Minha conta</li>
         <li class="nav-item">
           <a href="pages/gallery.html" class="nav-link">
@@ -98,7 +97,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a [routerLink]="['logout']" class="nav-link">
+          <a href="#" (click)="logout()" class="nav-link">
             <i class="fas fa-sign-out-alt nav-icon"></i>
             <p>Sair</p>
           </a>

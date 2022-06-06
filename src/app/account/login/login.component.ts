@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
 
   async onReset() {
     const result = await this.accountService.resetPass(this.resetPass);
-    console.log(result);
     if (result) {
       this.statusReset = 'E-mail enviado com sucesso';
     } else {
@@ -52,7 +51,6 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('person', JSON.stringify(this.person));
         if (result.data.lastlogin === null) {
           const verifica = await this.accountService.verifyAccount(result.data);
-          console.log(verifica);
         } else {
           this.router.navigate(['']);
         }

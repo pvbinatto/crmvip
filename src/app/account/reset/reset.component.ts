@@ -53,7 +53,6 @@ export class ResetComponent implements OnInit {
     let hash = this.route.snapshot.paramMap.get('id');
     this.user = await await this.accountService.verificaHashUser(hash);
     this.user.password = '';
-    console.log(this.user);
     this.spinner.hide();
   }
 

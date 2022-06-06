@@ -280,7 +280,6 @@ export class RegistrationComponent implements OnInit {
           products: JSON.parse(this.cart),
         },
       };
-      console.log(ob);
       const emp = await this.accountService.addNovo(ob);
       this.spinner.hide();
     }

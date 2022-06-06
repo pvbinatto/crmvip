@@ -76,7 +76,6 @@ export class CreateAccountComponent implements OnInit {
     try {
       if (this.validaDados(this.user)) {
         const result = await this.accountService.verifyAccount(this.user);
-        console.log(result);
         if (!result) {
           localStorage.setItem('cnpj', this.user.cnpj);
           this.router.navigate(['/registration']);

@@ -35,7 +35,6 @@ export class ProdutoComponent implements OnInit {
   detalhes(item: any) {
     // item.price = item.price.toLocaleString('pt-br', {minimumFractionDigits: 2}).replace(".", ",");
     this.produto = item;
-    console.log(item);
   }
 
   novo() {

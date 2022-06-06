@@ -30,7 +30,6 @@ export class PasswordComponent implements OnInit {
   async enviaEmail(business: any) {
     this.lbEnviar = '<i class="fas fa-circle-notch fa-spin"></i>';
     const result = await this.accountService.enviaEmailAtivacao(business);
-    console.log(result);
     if (result.status === 'success') {
       this.lbEnviar = 'Reenviar E-mail';
     }
@@ -41,7 +40,6 @@ export class PasswordComponent implements OnInit {
     let token = this.route.snapshot.paramMap.get('id');
     this.getEmpresa(token).then((data) => {
       this.business.email = data.email;
-      console.log(data);
       this.enviaEmail(data).then((retorno) => {
         this.spinner.hide();
       });

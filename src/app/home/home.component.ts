@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   business: any;
   strLocal: any;
   razaosocial: any;
-  servicos:any;
+  servicos: any;
   atendimentos: any;
   faturas: any;
 
@@ -39,7 +39,10 @@ export class HomeComponent implements OnInit {
   status_servico: any;
   valorTotal: any;
 
-  constructor(private contratoService: ContratoService, private invoice: InvoicesService) {}
+  constructor(
+    private contratoService: ContratoService,
+    private invoice: InvoicesService
+  ) {}
 
   getSum(): number {
     let sum = 0;
@@ -60,7 +63,7 @@ export class HomeComponent implements OnInit {
     let total = 0;
     for (let i = 0; i < contratos.length; i++) {
       const at = contratos[i];
-      if(at.cancelado === 'N'){
+      if (at.cancelado === 'N') {
         total++;
       }
     }
@@ -69,11 +72,17 @@ export class HomeComponent implements OnInit {
     this.valorTotal = this.getSum();
   }
 
-  async invoices(){
-    let faturas = await this.invoice.getInvoicesWS(GlobalComponent.getEmpresa().codigoInterno);
-    this.faturas = faturas.length;
-    this.parcelas = faturas;
-    console.log(faturas);
+  async invoices() {
+    let faturas = await this.invoice.getInvoicesWS(
+      GlobalComponent.getEmpresa().codigoInterno
+    );
+    if (faturas !== null) {
+      this.faturas = faturas.length;
+      this.parcelas = faturas;
+    } else {
+      this.faturas = 0;
+      this.parcelas = [];
+    }
   }
 
   ngOnInit(): void {

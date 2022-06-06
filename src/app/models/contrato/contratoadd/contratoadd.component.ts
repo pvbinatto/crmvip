@@ -24,7 +24,6 @@ export class ContratoaddComponent implements OnInit {
     private route: Router,
     @Inject(DOCUMENT) private document: Document
   ) {
-    console.log('this', this.document.location.pathname.split('/')[1]);
     if (this.document.location.pathname.split('/')[1] === 'registration') {
       this.hideContinuar = false;
     }
@@ -92,7 +91,6 @@ export class ContratoaddComponent implements OnInit {
     contratoItemService.enviouContrato.subscribe((contratos) => {
       this.itens_contrato = contratos;
     });
-    // console.log(this.itens_contrato);
     if (this.itens_contrato.length > 0) {
       this.contrato = this.itens_contrato[0].contrato.CODIGO;
     }

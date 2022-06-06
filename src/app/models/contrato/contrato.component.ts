@@ -44,7 +44,6 @@ export class ContratoComponent implements OnInit {
     const contratos = await this.contratoService.verificaContratos(
       this.business.codigoInterno
     );
-    console.log(contratos);
     this.itens_contratados = contratos;
     this.totalContrato = this.getSum();
     if (contratos.length > 0) {
