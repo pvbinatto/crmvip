@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
   async onSubmit() {
     try {
       const result = await this.accountService.login(this.user);
+      console.log(result);
       if (result.status === 'confirmed') {
         this.person.name = result.data.name;
         this.person.email = result.data.email;

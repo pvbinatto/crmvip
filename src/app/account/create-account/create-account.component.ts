@@ -62,6 +62,9 @@ export class CreateAccountComponent implements OnInit {
     if (ob.cnpj === '') {
       this.mensagemErro('Verifique os dados que estão faltando');
       return false;
+    } else if(!GlobalComponent.validarCNPJ(ob.cnpj)){
+      this.mensagemErro("Verifique o seu CNPJ");
+      return false;
     }
     return true;
   }
@@ -70,9 +73,8 @@ export class CreateAccountComponent implements OnInit {
     try {
       if (this.validaDados(this.user)) {
         const result = await this.accountService.verifyAccount(this.user);
-        if (!result) {
-          localStorage.setItem('cnpj', this.user.cnpj);
-          this.router.navigate(['/registration']);
+        if (result.status === 'error') {
+          this.mensagemErro(result.message);
         } else {
           var business = result;
           console.log(business);

@@ -80,8 +80,9 @@ export class RegistrationComponent implements OnInit {
     let token = this.route.snapshot.paramMap.get('id');
     if (token !== null) {
       this.business = await await this.accountService.verificaToken(token);
-      console.log(this.business);
       this.business.password = '';
+      localStorage.setItem('token', token);
+      this.showCNPJ = true;
     } else {
       this.showCNPJ = true;
     }
@@ -101,22 +102,21 @@ export class RegistrationComponent implements OnInit {
 
   async pesquisa(cnpj: any) {
     let businessReceita = await this.accountService.consultaCnpjReceita(cnpj);
-    console.log(businessReceita);
-    // this.business.company = businessReceita.nome;
-    // this.business.companyName = businessReceita.fantasia;
-    // this.business.person = businessReceita.qsa[0].nome;
-    // this.business.email = businessReceita.email;
-    // this.validaEmail(businessReceita.email);
-    // this.business.phone = businessReceita.telefone;
-    // this.business.zipcode = businessReceita.cep;
-    // this.business.address = businessReceita.logradouro;
-    // this.business.number = businessReceita.numero;
-    // this.business.district = businessReceita.bairro;
-    // this.business.complement = businessReceita.complemento;
-    // this.business.city = businessReceita.municipio;
-    // this.business.state = businessReceita.uf;
-    // this.temCNPJ = true;
-    // this.temCEP = true;
+    this.business.cpfcnpj = GlobalComponent.formataCNPJ(this.business.cpfcnpj)
+    this.business.company = businessReceita.nome;
+    this.business.companyName = businessReceita.fantasia;
+    this.business.email = businessReceita.email;
+    this.validaEmail(businessReceita.email);
+    this.business.phone = businessReceita.telefone.substring(0,14);
+    this.business.zipcode = businessReceita.cep;
+    this.business.address = businessReceita.logradouro;
+    this.business.number = businessReceita.numero;
+    this.business.district = businessReceita.bairro;
+    this.business.complement = businessReceita.complemento;
+    this.business.city = businessReceita.municipio;
+    this.business.state = businessReceita.uf;
+    this.temCNPJ = true;
+    this.temCEP = true;
     //Remover apos os testes
     // this.business.personDocument = '351.140.858-08';
     // this.validaCPF(this.business.personDocument);
@@ -126,6 +126,7 @@ export class RegistrationComponent implements OnInit {
     // this.business.passwordConfirm = '123456';
     // this.validaSenha(this.business.password);
     // this.validaSenhaPass();
+    console.log(this.business);
   }
 
   validCel = '';
@@ -173,7 +174,7 @@ export class RegistrationComponent implements OnInit {
 
   validCPF = '';
   validaCPF(cpf: any) {
-    if (cpf.length > 0) {
+    if (cpf !== '') {
       if (!GlobalComponent.validarCPF(cpf)) {
         this.validCPF = 'false';
         this.alert.ShowError('Verifique seu CPF');
@@ -281,7 +282,7 @@ export class RegistrationComponent implements OnInit {
           products: JSON.parse(this.cart),
         },
       };
-      console.log(ob);
+      const emp = await this.accountService.addNovo(ob);
       this.spinner.hide();
     }
   }
