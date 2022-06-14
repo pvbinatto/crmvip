@@ -38,6 +38,9 @@ import { GlobalComponent } from './global/global/global.component';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { AlifeFileToBase64Module } from 'alife-file-to-base64';
 import { InvoicesComponent } from './models/invoices/invoices.component';
+import { ContaComponent } from './models/conta/conta.component';
+import { VersionsComponent } from './models/versions/versions.component';
+import { TicketsComponent } from './models/tickets/tickets.component';
 
 registerLocaleData(ptBr);
 
@@ -69,6 +72,9 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     AlertComponent,
     GlobalComponent,
     InvoicesComponent,
+    ContaComponent,
+    VersionsComponent,
+    TicketsComponent,
   ],
   imports: [
     BrowserModule,

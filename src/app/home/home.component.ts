@@ -28,10 +28,12 @@ export class HomeComponent implements OnInit {
   parcelas = [
     {
       id: '',
-      emissao: '',
-      vencimento: '',
-      total: '',
-      pago: '',
+      document: '',
+      created: '',
+      bill_date: '',
+      price: '',
+      pay: '',
+      cancelled: ''
     },
   ];
 
@@ -73,12 +75,20 @@ export class HomeComponent implements OnInit {
   }
 
   async invoices() {
-    let faturas = await this.invoice.getInvoicesWS(
-      GlobalComponent.getEmpresa().codigoInterno
-    );
+    const faturas = await this.invoice.getInvoicesLocal();
+    
     if (faturas !== null) {
       this.faturas = faturas.length;
-      this.parcelas = faturas;
+      //Mapear a data e mudar para new Date
+      let parce = faturas.map((obj: any) => {
+        let ob = { ...obj, bill_date: new Date(obj.bill_date) };
+        return ob;
+      });
+      //Ordenar por Data Desc
+      const dSort = parce.sort(
+        (objA: any, objB: any) => objB.bill_date.getTime() - objA.bill_date.getTime(),
+      )
+      this.parcelas = dSort;
     } else {
       this.faturas = 0;
       this.parcelas = [];

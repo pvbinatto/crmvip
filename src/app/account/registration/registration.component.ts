@@ -101,12 +101,12 @@ export class RegistrationComponent implements OnInit {
 
   async pesquisa(cnpj: any) {
     let businessReceita = await this.accountService.consultaCnpjReceita(cnpj);
-    this.business.cpfcnpj = GlobalComponent.formataCNPJ(this.business.cpfcnpj)
+    this.business.cpfcnpj = GlobalComponent.formataCNPJ(this.business.cpfcnpj);
     this.business.company = businessReceita.nome;
     this.business.companyName = businessReceita.fantasia;
     this.business.email = businessReceita.email;
     this.validaEmail(businessReceita.email);
-    this.business.phone = businessReceita.telefone.substring(0,14);
+    this.business.phone = businessReceita.telefone.substring(0, 14);
     this.business.zipcode = businessReceita.cep;
     this.business.address = businessReceita.logradouro;
     this.business.number = businessReceita.numero;
@@ -116,22 +116,31 @@ export class RegistrationComponent implements OnInit {
     this.business.state = businessReceita.uf;
     this.temCNPJ = true;
     this.temCEP = true;
-    //Remover apos os testes
-    // this.business.personDocument = '351.140.858-08';
-    // this.validaCPF(this.business.personDocument);
-    // this.business.cellphone = '(18)99702-8873';
-    // this.validaTelefone(this.business.cellphone);
-    // this.business.password = '123456';
-    // this.business.passwordConfirm = '123456';
-    // this.validaSenha(this.business.password);
-    // this.validaSenhaPass();
   }
 
   validCel = '';
   validFix = '';
-  validaTelefone(cel: any) {
-    if (cel.length > 10 && cel.length <= 14) {
-      this.validCel = 'true';
+
+  validaCelular(cel: any) {
+    if (cel !== null) {
+      if (cel.length > 10 && cel.length <= 14) {
+        this.validCel = 'true';
+      }
+    }
+  }
+
+  validaTelefone(fone: any) {
+    if (fone !== null) {
+      if (fone.length > 10 && fone.length <= 14) {
+        this.validFix = 'true';
+      }
+    }
+  }
+
+  validResponsavel = '';
+  validaResponsavel(resp: any) {
+    if (resp !== null) {
+      this.validResponsavel = 'true';
     }
   }
 
@@ -139,16 +148,23 @@ export class RegistrationComponent implements OnInit {
   passConf = '';
   validPass = '';
   validaSenha(pass: any) {
-    if (pass === '' || pass.length < 6 || pass.length > 8) {
-      this.validPass = 'false';
-      this.alert.ShowError('Verifique sua senha');
-    } else {
-      this.validPass = 'true';
+    if (pass !== null && pass !== '') {
+      if (pass === '' || pass.length < 6 || pass.length > 8) {
+        this.validPass = 'false';
+        this.alert.ShowError('Verifique sua senha');
+      } else {
+        this.validPass = 'true';
+      }
     }
   }
 
   validaSenhaPass() {
-    if (this.business.passwordConfirm !== '') {
+    console.log(this.business.passwordConfirm);
+    if (
+      this.business.passwordConfirm !== '' &&
+      this.business.passwordConfirm !== null &&
+      this.business.passwordConfirm !== undefined
+    ) {
       if (this.business.password !== this.business.passwordConfirm) {
         this.passConf = 'false';
         this.alert.ShowError('As senhas não conferem');
@@ -172,7 +188,7 @@ export class RegistrationComponent implements OnInit {
 
   validCPF = '';
   validaCPF(cpf: any) {
-    if (cpf !== '') {
+    if (cpf !== null) {
       if (!GlobalComponent.validarCPF(cpf)) {
         this.validCPF = 'false';
         this.alert.ShowError('Verifique seu CPF');
@@ -204,12 +220,17 @@ export class RegistrationComponent implements OnInit {
       this.passConf = 'false';
       valid = false;
     }
+    if (this.business.person === null) {
+      this.validResponsavel = 'false';
+      valid = false;
+    }
     if (!valid) {
       return false;
     }
     return true;
   }
-  continuar(tela: any) {
+
+  async continuar(tela: any) {
     this.tela1 = false;
     this.tela2 = false;
     this.tela3 = false;
@@ -219,44 +240,44 @@ export class RegistrationComponent implements OnInit {
       } else if (tela === 2) {
         this.tela2 = true;
       } else if (tela === 3) {
-        this.tela3 = true;
+        if (this.business.codigoInterno == null) {
+          this.tela3 = true;
+        } else {
+          let user = {
+            company_id: parseInt(this.business.id),
+            name: this.business.person,
+            email: this.business.email,
+            password: this.business.password,
+            phone: this.business.cellphone,
+          };
+          let userCreate = await this.accountService.createUser(user);
+          if (userCreate.id !== null) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        }
       } else if (tela === 4) {
         this.tela4 = true;
       } else if (tela === 5) {
         this.tela5 = true;
       }
     } else {
+      this.tela1 = true;
       this.alert.ShowError('Verifique todos os campos obrigatórios');
     }
   }
 
-  validate(business: any, user: any) {
-    this.status = true;
-    this.showError = '';
-    if (
-      business.email === '' ||
-      business.phone === '' ||
-      business.cellphone === '' ||
-      user.password === '' ||
-      user.password === null ||
-      user.name === '' ||
-      user.name === null
-    ) {
-      this.status = false;
-      this.showError = 'Verifique as informações necessárias';
-      this.spinner.hide();
-      return false;
-    }
-    this.spinner.hide();
-    return true;
-  }
-
-  cnpjs: any;
+  dados: any;
   ngOnInit(): void {
     this.getBusiness();
-    this.cnpjs = localStorage.getItem('cnpj');
-    this.business.cpfcnpj = JSON.parse(this.cnpjs);
-    this.pesquisa(this.business.cpfcnpj);
+    this.dados = localStorage.getItem('dados');
+    this.business = JSON.parse(this.dados);
+    this.business.email.toLowerCase();
+    this.validaEmail(this.business.email);
+    if (this.business.phone !== null) {
+      this.validaTelefone(this.business.phone);
+    }
+    //this.pesquisa(this.business.cpfcnpj);
     localStorage.removeItem('cart');
   }
   cart: any;

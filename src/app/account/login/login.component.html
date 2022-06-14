@@ -8,11 +8,7 @@
           <div class="logo text-center">
             <img src="assets/images/logo-2.png" alt="" srcset="" />
           </div>
-          <h1>Login</h1>
-          <p>
-            Primeiro acesso?
-            <a [routerLink]="['/create-account']">Faça seu cadastro</a>
-          </p>
+          <!-- <h1>Login</h1> -->
           <div class="form mt-4">
             <form (ngSubmit)="onSubmit()" #form="ngForm">
               <div class="form-group" *ngIf="loginError">
@@ -50,6 +46,10 @@
                 <a href="" data-toggle="modal" data-target="#modal"
                   >Esqueceu sua senha?</a
                 >
+                <p class="mt-4">
+                  Primeiro acesso?
+                  <a [routerLink]="['/create-account']">Faça seu cadastro</a>
+                </p>
               </div>
             </form>
           </div>

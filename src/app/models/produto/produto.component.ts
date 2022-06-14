@@ -80,7 +80,7 @@ export class ProdutoComponent implements OnInit {
 
     if(this.itens.length > 0){
       this.carregado = true;
-      JqueryService.jTable('1', 'asc');
+      JqueryService.jTable('1', 'asc', []);
     }
     
   }

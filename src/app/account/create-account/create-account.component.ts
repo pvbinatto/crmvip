@@ -18,20 +18,7 @@ export class CreateAccountComponent implements OnInit {
 
   mask = GlobalComponent.maskCNPJ;
 
-  business = {
-    company: '',
-    cpfcnpj: '',
-    email: '',
-    phone: '',
-    cellphone: '',
-    zipcode: '',
-    address: '',
-    number: '',
-    complement: '',
-    district: '',
-    city: '',
-    state: '',
-  };
+  business: any;
 
   public showError = '';
   public loginError = false;
@@ -72,26 +59,44 @@ export class CreateAccountComponent implements OnInit {
     return true;
   }
 
+  dados = false;
   async onSubmit() {
     try {
       if (this.validaDados(this.user)) {
         const result = await this.accountService.verifyAccount(this.user);
-        if (!result) {
-          localStorage.setItem('cnpj', this.user.cnpj);
-          this.router.navigate(['/registration']);
-        } else if (result.status === 'error') {
-          this.mensagemErro(result.message);
+        if (result === null) {
+          console.log('não tem cadastro no vip');
         } else {
-          var business = result;
-          const insertCad = await this.accountService.createAccount(business);
-          localStorage.setItem('token', result.token);
-          this.clearObject(this.user);
-          this.mensagemErro('');
-          this.router.navigate(['/registration', { id: insertCad.token }]);
+          console.log('tem cadastro no vip');
+          try {
+            this.business = result;
+            const insertCad = await this.accountService.createAccount(
+              this.business
+            );
+            let localBusiness = JSON.stringify(insertCad);
+            localStorage.setItem('dados', localBusiness);
+            this.router.navigate(['/registration', {id: insertCad.token}]);
+          } catch (error: any) {
+            console.error(error.error);
+          }
         }
+
+        // if (!result) {
+        //   localStorage.setItem('cnpj', this.user.cnpj);
+        //   //this.router.navigate(['/registration']);
+        // } else if (result.status === 'error') {
+        //   this.mensagemErro(result.message);
+        // } else {
+        //   var business = result;
+        //   const insertCad = await this.accountService.createAccount(business);
+        //   localStorage.setItem('token', result.token);
+        //   this.clearObject(this.user);
+        //   this.mensagemErro('');
+        //   //this.router.navigate(['/registration', { id: insertCad.token }]);
+        // }
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error(error.error);
     }
   }
 }

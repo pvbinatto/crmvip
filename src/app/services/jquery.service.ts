@@ -7,13 +7,16 @@ declare var $: any;
 export class JqueryService {
   constructor() {}
 
-  public static jTable(coluna: any, ordem: any) {
+  public static jTable(coluna: any, ordem: any, targets: any) {
     $(document).ready(function () {
       $('.dataTable').DataTable({
-        order: [coluna, ordem],
+        "columnDefs": [ {
+          "targets"  : targets,
+          "orderable": false,
+          "order": ordem
+        }]
       });
     });
-    
   }
 
   public static closeModal() {

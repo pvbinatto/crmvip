@@ -33,6 +33,7 @@ export class AccountService {
   }
 
   async verifyAccount(account: any) {
+    console.log(account);
     account.cnpj = account.company.cpfcnpj.replace(/\D/g, '');
     const result = await this.http
       .get<any>(`${environment.api}/business/verificacadastro/${account.cnpj}`)

@@ -51,7 +51,7 @@ export class ContratoComponent implements OnInit {
     }
 
     if (contratos && type === '') {
-      JqueryService.jTable('3', 'asc');
+      JqueryService.jTable('3', 'asc', []);
     }
   }
 

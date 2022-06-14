@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('person', JSON.stringify(this.person));
         if (result.data.lastlogin === null) {
           const verifica = await this.accountService.verifyAccount(result.data);
+          console.log(verifica);
         } else {
           this.router.navigate(['']);
         }
@@ -61,8 +62,8 @@ export class LoginComponent implements OnInit {
         this.showError = result.message;
         this.loginError = true;
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log(error.error);
     }
   }
 }

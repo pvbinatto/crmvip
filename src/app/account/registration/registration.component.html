@@ -82,36 +82,7 @@
                   [innerText]="showError"
                 ></div>
               </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-12 text-center">
-                    <label for="form.cpfcnpj">CNPJ</label>
-                    <div class="input-group mb-3">
-                      <input
-                        type="text"
-                        class="form-control text-center"
-                        id="form.cpfcnpj"
-                        autocomplete="off"
-                        name="cpfcnpj"
-                        [textMask]="{ mask: mask }"
-                        [disabled]="!showCNPJ"
-                        [(ngModel)]="business.cpfcnpj"
-                      />
-                      <div class="input-group-prepend">
-                        <button
-                          class="btn btn-outline-secondary"
-                          type="button"
-                          id="button-addon1"
-                          (click)="pesquisa(business.cpfcnpj)"
-                        >
-                          <i class="fas fa-search"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="temCNPJ">
+              <div>
                 <div class="form-group">
                   <label for="form.company">Razão Social</label>
                   <input
@@ -137,18 +108,19 @@
                 </div>
                 <div class="row">
                   <div class="col-md-8">
-                    <label for="form.user.name">Responsável*</label>
+                    <label for="business.person">Responsável*</label>
                     <input
                       type="text"
                       class="form-control"
-                      id="form.user.name"
+                      id="business.person"
                       autocomplete="off"
                       name="person"
                       [ngClass]="{
-                        'is-valid': business.person != '',
-                        'is-invalid': business.person == ''
+                        'is-valid': validResponsavel == 'true',
+                        'is-invalid': validResponsavel == 'false'
                       }"
                       [(ngModel)]="business.person"
+                      (blur)="validaResponsavel(business.person)"
                     />
                   </div>
                   <div class="col-md-4">
@@ -172,7 +144,7 @@
                 </div>
                 <div class="form-group"></div>
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-8">
                     <div class="form-group">
                       <label for="form.email">E-mail*</label>
                       <input
@@ -190,6 +162,21 @@
                       />
                     </div>
                   </div>
+                  <div class="col-md-4">
+                    <div class="form-group mb-3">
+                      <label for="form.cpfcnpj">CNPJ</label>
+                      <input
+                        type="text"
+                        class="form-control text-center"
+                        id="form.cpfcnpj"
+                        autocomplete="off"
+                        name="cpfcnpj"
+                        [textMask]="{ mask: mask }"
+                        [disabled]="!showCNPJ"
+                        [(ngModel)]="business.cpfcnpj"
+                      />
+                    </div>
+                  </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="form.phone">Telefone</label>
@@ -202,10 +189,8 @@
                         mask="(00)00000-0000 || (00)0000-0000"
                         name="phone"
                         [ngClass]="{
-                          'is-valid':
-                            business.phone.length > 14 ||
-                            business.phone.length < 15,
-                          'is-invalid': business.phone.length === 0
+                          'is-valid': validFix == 'true',
+                          'is-invalid': validFix == 'false'
                         }"
                         (blur)="validaTelefone(business.phone)"
                         [(ngModel)]="business.phone"
@@ -227,7 +212,7 @@
                           'is-valid': validCel == 'true',
                           'is-invalid': validCel == 'false'
                         }"
-                        (blur)="validaTelefone(business.cellphone)"
+                        (blur)="validaCelular(business.cellphone)"
                         [(ngModel)]="business.cellphone"
                       />
                     </div>
@@ -241,7 +226,7 @@
                         id="form.password"
                         autocomplete="off"
                         name="password"
-                        maxlength="12"
+                        maxlength="8"
                         [ngClass]="{
                           'is-valid': validPass == 'true',
                           'is-invalid': validPass == 'false'
@@ -265,7 +250,7 @@
                         id="form.passwordConfirm"
                         autocomplete="off"
                         name="passwordConfirm"
-                        maxlength="12"
+                        maxlength="8"
                         [ngClass]="{
                           'is-valid': passConf == 'true',
                           'is-invalid': passConf == 'false'
@@ -291,7 +276,7 @@
           <div class="formulario mt-3" *ngIf="tela2">
             <h4>Endereço da sua empresa</h4>
             <hr>
-            <form (ngSubmit)="continuar(3)">
+            <form (ngSubmit)="continuar(3)" class="needs-validation">
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-4">
@@ -319,7 +304,7 @@
                     </div>
                   </div>
                   <div class="col-md-12">
-                    <div *ngIf="temCEP">
+                    <div>
                       <div class="row">
                         <div class="col-md-8">
                           <label>Endereço</label>

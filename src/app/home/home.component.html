@@ -40,7 +40,7 @@
         <div class="icon">
           <i class="ion ion-chatboxes"></i>
         </div>
-        <a href="#" class="small-box-footer"
+        <a [routerLink]="'/atendimento'" class="small-box-footer"
           >Ver meus atendimentos <i class="fas fa-arrow-circle-right"></i
         ></a>
       </div>
@@ -55,7 +55,7 @@
         <div class="icon">
           <i class="ion ion-card"></i>
         </div>
-        <a href="#" class="small-box-footer"
+        <a [routerLink]="'/financeiro'" class="small-box-footer"
           >Ver faturas <i class="fas fa-arrow-circle-right"></i
         ></a>
       </div>
@@ -70,7 +70,7 @@
         <div class="icon">
           <i class="ion ion-refresh"></i>
         </div>
-        <a href="#" class="small-box-footer"
+        <a [routerLink]="'/versoes'" class="small-box-footer"
           >Ver versões liberadas <i class="fas fa-arrow-circle-right"></i
         ></a>
       </div>
@@ -172,21 +172,21 @@
               </thead>
               <tbody>
                 <tr *ngIf="parcelas.length == 0">
-                  <td colspan="6" class="text-center bg-light">Nenhuma fatura encontrada</td>
+                  <td colspan="6" class="text-center bg-light">
+                    Nenhuma fatura encontrada
+                  </td>
                 </tr>
-                <tr *ngFor="let fat of parcelas">
+                <tr *ngFor="let fat of parcelas.slice(0, 5)">
                   <td>{{ fat.id }}</td>
-                  <td>{{ fat.emissao }}</td>
-                  <td>{{ fat.vencimento }}</td>
-                  <td>{{ fat.total | currency: "BRL" }}</td>
+                  <td>{{ fat.created | date: "dd/MM/yyyy" }}</td>
+                  <td>{{ fat.bill_date | date: "dd/MM/yyyy" }}</td>
+                  <td>{{ fat.price | currency: "BRL" }}</td>
                   <td>
-                    <span
-                      [ngClass]="{
-                        badge: true,
-                        'bg-suceess': fat.pago == 'Paga',
-                        'bg-danger': fat.pago == 'Aberta'
-                      }"
-                      >{{ fat.pago }}</span
+                    <span class="badge bg-success" *ngIf="fat.pay === 'S'"
+                      >Pago</span
+                    >
+                    <span class="badge bg-danger" *ngIf="fat.pay === 'N'"
+                      >Aberto</span
                     >
                   </td>
                 </tr>

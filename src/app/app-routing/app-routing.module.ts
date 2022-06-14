@@ -12,6 +12,10 @@ import { RegistrationComponent } from '../account/registration/registration.comp
 import { ResetComponent } from '../account/reset/reset.component';
 import { ContratoComponent } from '../models/contrato/contrato.component';
 import { ProdutoComponent } from '../models/produto/produto.component';
+import { ContaComponent } from '../models/conta/conta.component';
+import { InvoicesComponent } from '../models/invoices/invoices.component';
+import { TicketsComponent } from '../models/tickets/tickets.component';
+import { VersionsComponent } from '../models/versions/versions.component';
 
 const routes: Routes = [
   // {path: '', redirectTo: '', pathMatch: 'full'},
@@ -22,6 +26,9 @@ const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'contrato', component: ContratoComponent },
       { path: 'produto', component: ProdutoComponent },
+      { path: 'financeiro', component: InvoicesComponent },
+      { path: 'atendimento', component: TicketsComponent },
+      { path: 'versoes', component: VersionsComponent },
     ],
     canActivate: [AuthGuard],
   },

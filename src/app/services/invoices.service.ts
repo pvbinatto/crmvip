@@ -16,6 +16,13 @@ export class InvoicesService {
     return requestOptions;
   }
 
+  async getInvoicesLocal(){
+    const result = await this.http
+      .get<any>(`${environment.api}/invoices/`, this.getHeader())
+      .toPromise();
+    return result;
+  }
+
   async getInvoicesWS(codigoInterno: any) {
     const result = await this.http
       .get<any>(`${environment.api}/invoices/getbyclient/${codigoInterno}`, this.getHeader())
