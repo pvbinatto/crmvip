@@ -91,7 +91,7 @@
                     id="form.company"
                     autocomplete="off"
                     name="razaosocial"
-                    disabled
+                    disabled="disabled"
                     [(ngModel)]="business.company"
                   />
                 </div>
@@ -103,6 +103,7 @@
                     id="form.company"
                     autocomplete="off"
                     name="companyName"
+                    readonly
                     [(ngModel)]="business.companyName"
                   />
                 </div>
@@ -119,8 +120,9 @@
                         'is-valid': validResponsavel == 'true',
                         'is-invalid': validResponsavel == 'false'
                       }"
-                      [(ngModel)]="business.person"
                       (blur)="validaResponsavel(business.person)"
+                      [(ngModel)]="business.person"
+                      
                     />
                   </div>
                   <div class="col-md-4">

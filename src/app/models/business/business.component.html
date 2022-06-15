@@ -1,0 +1,304 @@
+<div class="content-wrapper pl-5 pr-5 pt-0">
+  <!-- Content Header (Page header) -->
+  <div class="content-header"></div>
+  <!-- /.content-header -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Meus dados</h3>
+            <div class="card-tools">
+              <button
+                type="button"
+                class="btn btn-tool"
+                data-card-widget="collapse"
+                title="Collapse"
+              >
+                <i class="fas fa-minus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <form  class="needs-validation">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">Razão Social</label>
+                    <p>{{ emp.company | titlecase }}</p>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Nome Fantasia</label>
+                    <p>{{ emp.companyName | titlecase }}</p>
+                  </div>
+                  <div class="form-group">
+                    <label for="">CNPJ</label>
+                    <p>{{ emp.cpfcnpj }}</p>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">Responsável</label>
+                        <p>{{ emp.person }}</p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">CPF</label>
+                        <p>{{ emp.personDocument }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="">E-mail</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="email"
+                      [ngClass]="{
+                        'is-invalid': validEmail == 'false'
+                      }"
+                      (blur)="validaEmail(emp.email)"
+                      [(ngModel)]="emp.email"
+                    />
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">Telefone</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          mask="(00)00000-0000 || (00)0000-0000"
+                          name="phone"
+                          [ngClass]="{
+                            'is-invalid': validFix == 'false'
+                          }"
+                          (blur)="validaTelefone(emp.phone)"
+                          [(ngModel)]="emp.phone"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">Celular</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="cellphone"
+                          mask="(00)00000-0000 || (00)0000-0000"
+                          maxlength="15"
+                          [ngClass]="{
+                            'is-invalid': validCel == 'false'
+                          }"
+                          (blur)="validaCelular(emp.cellphone)"
+                          [(ngModel)]="emp.cellphone"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                        <h5>Endereço</h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label for="">CEP</label>
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="emp.zipcode"
+                            [textMask]="{ mask: cep }"
+                            name="zipcode"
+                            [ngClass]="{
+                                'is-invalid': Validzipcode == 'false'
+                              }"
+                            aria-label="Recipient's username"
+                            aria-describedby="button-addon2"
+                          />
+                          <div class="input-group-append">
+                            <button
+                              class="btn btn-light btn-procurar"
+                              (click)="pesquisaCep(emp.zipcode)"
+                              type="button"
+                              id="button-addon2"
+                            >
+                              <i class="fas fa-search"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-9">
+                      <div class="form-group">
+                        <label for="">Endereço</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="street"
+                          [ngClass]="{
+                            'is-invalid': Validaddress == 'false'
+                          }"
+                          [(ngModel)]="emp.address"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="">Número</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="number"
+                        [ngClass]="{
+                            'is-invalid': Validnumber == 'false'
+                          }"
+                        [(ngModel)]="emp.number"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">Bairro</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="district"
+                          [ngClass]="{
+                            'is-invalid': Validdistrict == 'false'
+                          }"
+                          [(ngModel)]="emp.district"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">Complemento</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="complement"
+                          [(ngModel)]="emp.complement"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-10">
+                      <div class="form-group">
+                        <label for="">Cidade</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="city"
+                          [ngClass]="{
+                            'is-invalid': Validcity == 'false'
+                          }"
+                          [(ngModel)]="emp.city"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <label for="">UF</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="state"
+                        [ngClass]="{
+                            'is-invalid': Validstate == 'false'
+                          }"
+                        [(ngModel)]="emp.state"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-6 text-right">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                  >
+                    Mudar a senha
+                  </button>
+                  <button type="button" (click)="onSubmit()" class="btn btn-success">Salvar Cadastro</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal troca senha -->
+<div
+  class="modal left fade"
+  id="exampleModal"
+  tabindex=""
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-5">
+        <h4 class="mb-4">Troque sua senha</h4>
+        <form class="need-validation">
+          <div class="form-group">
+            <label for="">Senha Atual</label>
+            <input
+              type="password"
+              name="passwordOld"
+              class="form-control"
+              [(ngModel)]="person.passwordOld"
+              id=""
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Nova Senha</label>
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': validPass == 'false',
+                'is-valid': validPass == 'true'
+              }"
+              [(ngModel)]="person.password"
+              id=""
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Confirmar nova senha</label>
+            <input
+              type="password"
+              name="passwordConfirm"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': passConf == 'false',
+                'is-valid': passConf == 'true'
+              }"
+              [(ngModel)]="person.passwordConfirm"
+              id=""
+            />
+          </div>
+          <div class="form-group text-right">
+            <button
+              class="btn btn-light"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              Cancelar
+            </button>
+            <button type="button" (click)="submitPass()" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

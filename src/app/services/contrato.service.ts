@@ -14,7 +14,7 @@ export class ContratoService {
   static clicouContrato = new EventEmitter();
 
   getHeader(): { headers: HttpHeaders; } {
-    const token = localStorage.getItem('token');
+    let token = localStorage.getItem('token');
     let header = new HttpHeaders({ 'token': '' + token });
     const requestOptions = { headers: header };
     return requestOptions;

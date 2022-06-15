@@ -41,6 +41,7 @@ import { InvoicesComponent } from './models/invoices/invoices.component';
 import { ContaComponent } from './models/conta/conta.component';
 import { VersionsComponent } from './models/versions/versions.component';
 import { TicketsComponent } from './models/tickets/tickets.component';
+import { BusinessComponent } from './models/business/business.component';
 
 registerLocaleData(ptBr);
 
@@ -75,6 +76,7 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     ContaComponent,
     VersionsComponent,
     TicketsComponent,
+    BusinessComponent,
   ],
   imports: [
     BrowserModule,

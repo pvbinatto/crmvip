@@ -23,13 +23,7 @@ export class SidebarComponent implements OnInit {
     let name = str.split(' ');
     return name[0].charAt(0) + "" + name[1].charAt(0);
   }
-  sair: any;
-  async logout(){
-      this.sair  = await this.alert.interrogation('Deseja realmente sair?');
-      if(this.sair.status){
-        this.router.navigate(['logout']);
-      }
-  }
+  
 
   ngOnInit(): void {
     this.personlocal = localStorage.getItem('person');

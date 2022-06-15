@@ -1,3 +1,4 @@
+import { splitAtColon } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -65,62 +66,59 @@ export class GlobalComponent {
     /\d/,
   ];
 
-  public static formataCNPJ(cnpj: any){
-    return cnpj.toString().replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+  public static formataCNPJ(cnpj: any) {
+    return cnpj
+      .toString()
+      .replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
   }
 
-  public static validarCNPJ(cnpj: any){
- 
-      cnpj = cnpj.replace(/[^\d]+/g,'');
-   
-      if(cnpj === '') return false;
-       
-      if (cnpj.length != 14)
-          return false;
-   
-      // Elimina CNPJs invalidos conhecidos
-      if (cnpj == "00000000000000" || 
-          cnpj == "11111111111111" || 
-          cnpj == "22222222222222" || 
-          cnpj == "33333333333333" || 
-          cnpj == "44444444444444" || 
-          cnpj == "55555555555555" || 
-          cnpj == "66666666666666" || 
-          cnpj == "77777777777777" || 
-          cnpj == "88888888888888" || 
-          cnpj == "99999999999999")
-          return false;
-           
-      // Valida DVs
-      let tamanho = cnpj.length - 2
-      let numeros = cnpj.substring(0,tamanho);
-      let digitos = cnpj.substring(tamanho);
-      let soma = 0;
-      let pos = tamanho - 7;
-      for (let i = tamanho; i >= 1; i--) {
-        soma += numeros.charAt(tamanho - i) * pos--;
-        if (pos < 2)
-              pos = 9;
-      }
-      let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-      if (resultado != digitos.charAt(0))
-          return false;
-           
-      tamanho = tamanho + 1;
-      numeros = cnpj.substring(0,tamanho);
-      soma = 0;
-      pos = tamanho - 7;
-      for (let i = tamanho; i >= 1; i--) {
-        soma += numeros.charAt(tamanho - i) * pos--;
-        if (pos < 2)
-              pos = 9;
-      }
-      resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-      if (resultado != digitos.charAt(1))
-            return false;
-             
-      return true;
-      
+  public static validarCNPJ(cnpj: any) {
+    cnpj = cnpj.replace(/[^\d]+/g, '');
+
+    if (cnpj === '') return false;
+
+    if (cnpj.length != 14) return false;
+
+    // Elimina CNPJs invalidos conhecidos
+    if (
+      cnpj == '00000000000000' ||
+      cnpj == '11111111111111' ||
+      cnpj == '22222222222222' ||
+      cnpj == '33333333333333' ||
+      cnpj == '44444444444444' ||
+      cnpj == '55555555555555' ||
+      cnpj == '66666666666666' ||
+      cnpj == '77777777777777' ||
+      cnpj == '88888888888888' ||
+      cnpj == '99999999999999'
+    )
+      return false;
+
+    // Valida DVs
+    let tamanho = cnpj.length - 2;
+    let numeros = cnpj.substring(0, tamanho);
+    let digitos = cnpj.substring(tamanho);
+    let soma = 0;
+    let pos = tamanho - 7;
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2) pos = 9;
+    }
+    let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    if (resultado != digitos.charAt(0)) return false;
+
+    tamanho = tamanho + 1;
+    numeros = cnpj.substring(0, tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2) pos = 9;
+    }
+    resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    if (resultado != digitos.charAt(1)) return false;
+
+    return true;
   }
 
   public static validarCPF(cpf: any) {
@@ -173,10 +171,39 @@ export class GlobalComponent {
     GlobalComponent.hora;
   public static carregando = '<i class="fas fa-circle-notch fa-spin"></i>';
 
+  public static capitalize(str: any) {
+    var words = str.split(' ');
+    var newStr = '';
+    for (let i = 0; i < words.length; i++) {
+      const wp = words[i];
+      newStr += wp.charAt(0).toUpperCase() + wp.slice(1).toLowerCase() + ' ';
+    }
+    return newStr.slice(0, -1);
+  }
+
+  public static lower(str: any) {
+    return str.toLowerCase();
+  }
+
+  public static upper(str: any) {
+    return str.toUpperCase();
+  }
+
   public static getEmpresa() {
     let empresa: any;
     empresa = localStorage.getItem('business');
     const business = JSON.parse(empresa);
+    business.address = this.capitalize(business.address);
+    business.district = this.capitalize(business.district);
+    business.city = this.capitalize(business.city);
+    business.email = this.lower(business.email);
+    return business;
+  }
+
+  public static getPerson() {
+    let person: any;
+    person = localStorage.getItem('person');
+    const business = JSON.parse(person);
     return business;
   }
 }

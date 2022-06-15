@@ -97,13 +97,13 @@
         </li> -->
         <li class="nav-header">Minha conta</li>
         <li class="nav-item">
-          <a href="pages/gallery.html" class="nav-link">
+          <a [routerLink]="'/empresa'" class="nav-link">
             <i class="nav-icon fas fa-file-alt"></i>
             <p>Meus dados</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" (click)="logout()" class="nav-link">
+          <a [routerLink]="'/logout'" class="nav-link">
             <i class="fas fa-sign-out-alt nav-icon"></i>
             <p>Sair</p>
           </a>

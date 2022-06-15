@@ -1,0 +1,10 @@
+label {
+    font-weight: 500!important;
+}
+.btn-procurar {
+    border: solid 1px #ccc;
+    border-left: none;
+    margin-left: -1px;
+    margin-top: 0px;
+    background-color: #fff;
+}

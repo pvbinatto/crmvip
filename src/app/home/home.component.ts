@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
 
   async contratos() {
     this.servicos = GlobalComponent.carregando;
-    this.atendimentos = 34;
+    this.atendimentos = 0;
     const contratos = await this.contratoService.verificaContratos(
       GlobalComponent.getEmpresa().codigoInterno
     );
@@ -76,7 +76,6 @@ export class HomeComponent implements OnInit {
 
   async invoices() {
     const faturas = await this.invoice.getInvoicesLocal();
-    
     if (faturas !== null) {
       this.faturas = faturas.length;
       //Mapear a data e mudar para new Date

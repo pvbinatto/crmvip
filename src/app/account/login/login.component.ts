@@ -44,14 +44,14 @@ export class LoginComponent implements OnInit {
     try {
       const result = await this.accountService.login(this.user);
       if (result.status === 'confirmed') {
-        this.person.name = result.data.name;
-        this.person.email = result.data.email;
         localStorage.setItem('token', result.data.company.token);
         localStorage.setItem('business', JSON.stringify(result.data.company));
-        localStorage.setItem('person', JSON.stringify(this.person));
+        let person = await this.accountService.getUserByEmail(result.data.company.email);
+        delete person.password;
+        localStorage.setItem('person', JSON.stringify(person));
         if (result.data.lastlogin === null) {
-          const verifica = await this.accountService.verifyAccount(result.data);
-          console.log(verifica);
+          const verifica = await this.accountService.verifyAccount(result.data.company);
+          this.router.navigate(['']);
         } else {
           this.router.navigate(['']);
         }
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
         this.loginError = true;
       }
     } catch (error: any) {
-      console.log(error.error);
+      console.log(error);
     }
   }
 }

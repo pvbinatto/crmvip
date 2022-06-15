@@ -159,7 +159,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   validaSenhaPass() {
-    console.log(this.business.passwordConfirm);
     if (
       this.business.passwordConfirm !== '' &&
       this.business.passwordConfirm !== null &&
@@ -251,6 +250,7 @@ export class RegistrationComponent implements OnInit {
             phone: this.business.cellphone,
           };
           let userCreate = await this.accountService.createUser(user);
+          let atualizaBusiness = await this.accountService.createAccount(this.business);
           if (userCreate.id !== null) {
             localStorage.clear();
             this.router.navigate(['/login']);

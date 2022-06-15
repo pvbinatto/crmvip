@@ -13,7 +13,7 @@ export class CreateAccountComponent implements OnInit {
   user = {
     nome: '',
     email: '',
-    cnpj: '',
+    cpfcnpj: '',
   };
 
   mask = GlobalComponent.maskCNPJ;
@@ -52,7 +52,7 @@ export class CreateAccountComponent implements OnInit {
     if (ob.cnpj === '') {
       this.mensagemErro('Verifique os dados que estão faltando');
       return false;
-    } else if (!GlobalComponent.validarCNPJ(ob.cnpj)) {
+    } else if (!GlobalComponent.validarCNPJ(ob.cpfcnpj)) {
       this.mensagemErro('Verifique o seu CNPJ');
       return false;
     }
@@ -64,10 +64,12 @@ export class CreateAccountComponent implements OnInit {
     try {
       if (this.validaDados(this.user)) {
         const result = await this.accountService.verifyAccount(this.user);
+        
         if (result === null) {
+          //Ainda nao tem cadastro no VIP
           console.log('não tem cadastro no vip');
         } else {
-          console.log('tem cadastro no vip');
+          //Se tiver cadastro no VIP
           try {
             this.business = result;
             const insertCad = await this.accountService.createAccount(
@@ -80,23 +82,9 @@ export class CreateAccountComponent implements OnInit {
             console.error(error.error);
           }
         }
-
-        // if (!result) {
-        //   localStorage.setItem('cnpj', this.user.cnpj);
-        //   //this.router.navigate(['/registration']);
-        // } else if (result.status === 'error') {
-        //   this.mensagemErro(result.message);
-        // } else {
-        //   var business = result;
-        //   const insertCad = await this.accountService.createAccount(business);
-        //   localStorage.setItem('token', result.token);
-        //   this.clearObject(this.user);
-        //   this.mensagemErro('');
-        //   //this.router.navigate(['/registration', { id: insertCad.token }]);
-        // }
       }
     } catch (error: any) {
-      console.error(error.error);
+      console.error(error);
     }
   }
 }

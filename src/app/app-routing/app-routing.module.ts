@@ -16,6 +16,7 @@ import { ContaComponent } from '../models/conta/conta.component';
 import { InvoicesComponent } from '../models/invoices/invoices.component';
 import { TicketsComponent } from '../models/tickets/tickets.component';
 import { VersionsComponent } from '../models/versions/versions.component';
+import { BusinessComponent } from '../models/business/business.component';
 
 const routes: Routes = [
   // {path: '', redirectTo: '', pathMatch: 'full'},
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: 'financeiro', component: InvoicesComponent },
       { path: 'atendimento', component: TicketsComponent },
       { path: 'versoes', component: VersionsComponent },
+      { path: 'empresa', component: BusinessComponent },
     ],
     canActivate: [AuthGuard],
   },

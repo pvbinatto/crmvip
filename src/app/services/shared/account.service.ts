@@ -8,7 +8,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AccountService {
-  constructor(private http: HttpClient, private loading: NgxSpinnerService, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private loading: NgxSpinnerService,
+    private router: Router
+  ) {}
 
   getHeader() {
     const token = localStorage.getItem('token');
@@ -33,8 +37,7 @@ export class AccountService {
   }
 
   async verifyAccount(account: any) {
-    console.log(account);
-    account.cnpj = account.company.cpfcnpj.replace(/\D/g, '');
+    account.cnpj = account.cpfcnpj.replace(/\D/g, '');
     const result = await this.http
       .get<any>(`${environment.api}/business/verificacadastro/${account.cnpj}`)
       .toPromise();
@@ -185,11 +188,11 @@ export class AccountService {
     const result = await this.http
       .post<any>(`${environment.api}/business/insertNewBusiness/`, ob)
       .toPromise();
-      let resultado = JSON.parse(result);
-      if(resultado.status === 'token'){
-        localStorage.setItem('token', resultado.token);
-        this.router.navigate(['/login']);
-      }
+    let resultado = JSON.parse(result);
+    if (resultado.status === 'token') {
+      localStorage.setItem('token', resultado.token);
+      this.router.navigate(['/login']);
+    }
     return result;
   }
 
@@ -207,6 +210,16 @@ export class AccountService {
     delete user.passwordConfirm;
     const result = await this.http
       .post<any>(`${environment.api}/users`, user, this.getHeader())
+      .toPromise();
+    return result;
+  }
+
+  async getUserByEmail(user: any) {
+    const result = await this.http
+      .get<any>(
+        `${environment.api}/users/getbyemail/${user}`,
+        this.getHeader()
+      )
       .toPromise();
     return result;
   }
