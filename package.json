@@ -2,6 +2,8 @@
   "name": "app-crm",
   "version": "0.0.0",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d buildn",
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
@@ -9,6 +11,7 @@
     "test": "ng test"
   },
   "private": true,
+  "homepage": "https://pvbinatto.github.io/crmvip/",
   "dependencies": {
     "@angular/animations": "~13.1.0",
     "@angular/common": "~13.1.0",
