@@ -18,7 +18,7 @@ import { CreateAccountComponent } from './account/create-account/create-account.
 import { AuthenticationComponent } from './layout/authentication/authentication.component';
 import { FormsModule } from '@angular/forms';
 import { LogoutComponent } from './account/logout/logout.component';
-// import { TextMaskModule } from 'angular2-text-mask';
+import { TextMaskModule } from 'angular2-text-mask';
 import { PasswordComponent } from './account/password/password.component';
 import { RegistrationComponent } from './account/registration/registration.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
@@ -83,7 +83,7 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    // TextMaskModule,
+    TextMaskModule,
     NgxMaskModule.forRoot(maskConfigFunction),
     BrowserAnimationsModule,
     NgxSpinnerModule,

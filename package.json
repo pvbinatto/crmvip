@@ -1,6 +1,6 @@
 {
   "name": "app-crm",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d buildn",
